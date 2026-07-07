@@ -1,0 +1,209 @@
+ Programmatic SEO Project Checklist
+  Quality Assurance Standard for All Client Deliverables
+
+
+  1. Schema Markup Implementation
+
+  Required Schemas (Minimum)
+  - Organization Schema - Company info, logo, social profiles
+  - BreadcrumbList Schema - Navigation hierarchy on all pages
+  - Article/WebPage Schema - All content pages with proper metadata
+  - FAQPage Schema - FAQ sections with question/answer pairs
+  - LocalBusiness Schema - For service-based clients (with geo-coordinates, hours, ratings)
+
+  Schema Validation
+  - All schemas validated using Google Rich Results Test (0 errors)
+  - Schemas tested in Google Search Console > Enhancements
+  - JSON-LD format used (not microdata)
+  - Dynamic schema generation implemented for programmatic pages
+
+  Optional Advanced Schemas
+  - AggregateRating Schema (if reviews available)
+  - HowTo Schema (for instructional content)
+  - Video Schema (if video content present)
+  - Product Schema (for e-commerce)
+
+  
+  2. Next.js Technical Setup
+
+  Metadata Configuration
+  - Dynamic metadata implemented using Next.js 13+ generateMetadata()
+  - Unique title tags for every page (50-60 characters)
+  - Unique meta descriptions for every page (150-160 characters)
+ - Unique title tags for every page (50-60 characters) - Dynamic CTA system: Add CTAs like "| Get Quote", "| Call Now", or "| 24/7" only when {keyword} in {location} is under 40 chars. Remove CTA when string is too long to prevent truncation.  
+  - Unique meta descriptions for every page (150-160 characters) - Dynamic CTA insertion: Include action phrases ("Call for free quote!", phone numbers, "Book online") conditionally based on remaining character space after core content. Prioritize CTAs that fit within limit.
+
+  - OpenGraph tags configured (title, description, image, url, type)
+  - Twitter Card tags configured (card, title, description, image)
+  - Canonical URLs set on all pages
+
+  - Logo Must pop on the SERP. no logo. No clicks. Boring logo. No clicks.  WE GOTTA GRAB THEM HERE.
+
+  Sitemap & Robots
+  - Dynamic sitemap.xml auto-generates with new content
+  - Sitemap includes all indexable pages with proper priority/changefreq
+  - robots.txt configured correctly (allow/disallow rules)
+  - Sitemap submitted to Google Search Console
+  - Sitemap accessible at /sitemap.xml
+
+  Performance Optimization
+  - Next.js Image component used for all images
+  - Images properly sized and compressed
+  - next/font used for font optimization
+  - Dynamic imports for heavy components
+  - Proper cache headers configured
+	
+  ---
+  3. Content Quality Standards
+
+  Content Uniqueness (Critical for Programmatic Pages)
+- Target 1000 words total content per page with minimum 40% (400+ words) dynamically generated from content libraries
+  - Dynamic intro paragraphs using page-specific data (150-200 words)
+  - 3-5 FAQ sections per page with unique answers (100+ words each)
+  - Unique H1 heading on every page
+  - 3-5 H2 subheadings with keyword variations
+  - Remaining 60% can use templated content blocks, but must be relevant and contextual to the page topic
+
+  Content Structure
+   - Proper heading hierarchy (H1 → H2 → H3) - Must include {Keyword} + {Location} combinations throughout hierarchy
+  - Bullet points/numbered lists included
+  - Comparison tables where applicable
+  - "Related Items" or "You May Also Like" sections
+  - Location-specific content for local pages
+
+  Content Depth
+  - Primary keyword in first 100 words
+  - Secondary keywords naturally distributed
+  - No keyword stuffing (max 2% density)
+  - Content provides actual value (not just filler)
+
+  ---
+  4. On-Page SEO Elements
+
+  Page-Level Optimization
+  - Title tag includes primary keyword + Location
+  - Meta description includes call-to-action If doesn't break the length.
+  - URL structure is clean and readable (no random IDs) (only 2 directories deep)
+  - All images have descriptive alt text (dynamic)
+  - Internal links use descriptive anchor text (not "click here")
+  - External links to approved and relevant .gov resources in the bottom of a page not contained in the footer.
+
+  Internal Linking
+  - Breadcrumb navigation on all pages
+  - 5-10 contextual internal links per page
+  - Category pages link to all child pages
+  - Hub-and-spoke linking structure implemented
+  - No broken internal links
+
+  User Experience
+  - Clear page hierarchy and navigation
+  - Call-to-action present on every page
+  - Contact information easily accessible
+  - Mobile-friendly design (responsive)
+
+  ---
+  5. Technical SEO
+
+  Core Web Vitals (Must Pass)
+  - LCP (Largest Contentful Paint) < 2.5 seconds
+  - FID (First Input Delay) < 100 milliseconds
+  - CLS (Cumulative Layout Shift) < 0.1
+  - Tested on both mobile and desktop
+
+  Mobile Optimization
+  - Mobile-responsive design verified
+  - Touch targets minimum 44x44px
+  - No horizontal scrolling
+  - Text readable without zooming
+  - Forms easy to complete on mobile
+
+  Indexation
+  - All important pages are indexable (not blocked by robots.txt)
+  - No duplicate content issues
+  - Canonical tags prevent duplicate indexing
+  - Pagination handled correctly (if applicable)
+  - 404 pages return proper status codes
+
+  Security & Accessibility
+  - HTTPS enabled (SSL certificate valid)
+  - No mixed content warnings
+  - Basic accessibility standards met (WCAG 2.1 Level A minimum)
+
+  ---
+  6. Pre-Launch Validation
+
+  Quality Control Checklist
+  - Run full site crawl using Screaming Frog
+  - Check for broken links (internal and external)
+  - Validate all schemas (Google Rich Results Test)
+  - Test on multiple devices (desktop, mobile, tablet)
+  - Test on multiple browsers (Chrome, Firefox, Safari)
+  - Verify Core Web Vitals in PageSpeed Insights
+  - Check for duplicate title/meta tags
+  - Verify all images load correctly
+  - Test contact forms and CTAs
+  - Use Area code validation and State Zip code confirmation. Full name field with a max 3 string entry minimum two. ( Dr john Doe or John doe. We rejects random strings like Qwertyqwerty
+
+  Google Tools Setup
+  - Google Search Console verified
+  - Sitemap submitted in GSC
+  - Google Analytics installed and tracking
+  - GA4 events configured (if applicable)
+  - Initial index request submitted for key pages
+  - Meta Pixel
+
+  ---
+  7. Post-Launch Monitoring
+
+  Week 1 After Launch
+  - Check Google Search Console for crawl errors
+  - Monitor indexation status (Coverage report)
+  - Verify schemas showing in Enhancements
+  - Check Core Web Vitals report
+  - Monitor initial ranking positions
+
+  Ongoing Monthly Tasks
+  - Review GSC Performance report
+  - Check for new crawl errors or issues
+  - Monitor Core Web Vitals trends
+  - Track ranking changes for key pages
+  - Review competitor performance
+  - Check backlink profile health
+
+  Quarterly Optimization
+  - Update content with fresh data/statistics
+  - Add new FAQ sections based on user queries
+  - Refresh meta descriptions for underperforming pages
+  - Expand thin content pages
+  - Add more internal links to new content
+  - Review and update schema markup
+
+  ---
+  8. Team Collaboration Notes
+
+  Development Team Responsibilities
+  - Next.js technical implementation
+  - Schema markup setup
+  - Performance optimization
+  - Sitemap/robots configuration
+
+  Content Team Responsibilities
+  - Unique content creation (300+ words per page)
+  - FAQ development
+  - Meta tag writing (titles/descriptions)
+  - Alt text for images
+
+  SEO Team Responsibilities
+  - Keyword research and strategy
+  - Google Search Console monitoring
+  - Ranking tracking and reporting
+  - Technical SEO audits
+  - Backlink strategy
+
+  Resources & Tools
+  - Google Rich Results Test: https://search.google.com/test/rich-results
+  - PageSpeed Insights: https://pagespeed.web.dev/
+  - Google Search Console: https://search.google.com/search-console
+  - Schema.org Documentation: https://schema.org/
+  - Screaming Frog SEO Spider: https://www.screamingfrog.co.uk/
+

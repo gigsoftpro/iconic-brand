@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "ignoreCommand": "git diff --quiet HEAD^ HEAD -- app/ components/ lib/ public/ next.config.ts package.json tailwind.config.ts tsconfig.json postcss.config.mjs",
+  "crons": [
+    {
+      "path": "/api/engagement/send",
+      "schedule": "0 */6 * * *"
+    }
+  ]
+}
