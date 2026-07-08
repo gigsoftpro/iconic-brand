@@ -1,4 +1,7 @@
 import birminghamContent from '@/json/birminghamcontentex.json';
+// Additional cities, generated per state by scripts/generate-city-content.mjs.
+// Add one import + spread per state as new states are generated.
+import alCitiesContent from '@/json/al-cities.json';
 
 export interface CityServiceContent {
   key: string;
@@ -132,7 +135,12 @@ type CityServiceContentRecord = Omit<CityServiceContent, 'key'> & {
   key?: string;
 };
 
-const cityServiceContentByKey = birminghamContent as unknown as Record<string, CityServiceContentRecord>;
+// Merge every city's generated content into one compound-key lookup.
+// Birmingham is hand-tuned; other cities are generated per state.
+const cityServiceContentByKey = {
+  ...(birminghamContent as unknown as Record<string, CityServiceContentRecord>),
+  ...(alCitiesContent as unknown as Record<string, CityServiceContentRecord>),
+};
 
 export function getCityServiceContent(
   serviceSlug: string,
