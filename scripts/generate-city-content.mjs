@@ -50,6 +50,7 @@ const PACKS = {
   seo: {
     disc: 'local SEO', readerGoal: 'getting found by nearby customers the moment they search',
     outcome: 'a steady flow of local search traffic, calls, and direction requests',
+    metric: 'local search visibility',
     terms: ['the Google map pack', 'Google Business Profile', 'local citations', 'NAP consistency', 'review velocity'],
     problems: [
       'Ranking below national directories and chains for the "near me" searches {{city}} customers actually type',
@@ -87,6 +88,7 @@ const PACKS = {
   paidads: {
     disc: 'paid media and performance advertising', readerGoal: 'turning ad spend into measurable, profitable customers',
     outcome: 'a lower cost per acquisition and ad spend you can trace to revenue',
+    metric: 'paid lead volume',
     terms: ['cost per acquisition', 'return on ad spend', 'conversion tracking', 'geo-fencing', 'audience targeting'],
     problems: [
       'Ad spend leaking into clicks that never convert because campaigns target the whole state, not the {{metroShort}}',
@@ -124,6 +126,7 @@ const PACKS = {
   social: {
     disc: 'social media marketing', readerGoal: 'building a real local audience that turns into customers',
     outcome: 'an engaged {{city}} following that drives foot traffic and referrals',
+    metric: 'social-driven engagement',
     terms: ['content calendar', 'community management', 'organic reach', 'paid social', 'engagement rate'],
     problems: [
       'Posting into the void with no consistent presence in front of {{city}} customers',
@@ -161,6 +164,7 @@ const PACKS = {
   content: {
     disc: 'content marketing', readerGoal: 'becoming the trusted local authority buyers find and believe',
     outcome: 'inbound traffic and leads that compound over time',
+    metric: 'organic content traffic',
     terms: ['topic clusters', 'search intent', 'thought leadership', 'editorial calendar', 'lead magnets'],
     problems: [
       'A website nobody finds because it answers none of the questions {{city}} buyers search',
@@ -198,6 +202,7 @@ const PACKS = {
   website: {
     disc: 'website design and development', readerGoal: 'a site that turns visitors into booked calls and customers',
     outcome: 'a fast, credible site that converts {{city}} traffic',
+    metric: 'site conversion rate',
     terms: ['conversion rate', 'core web vitals', 'mobile-first design', 'calls-to-action', 'page speed'],
     problems: [
       'A slow, dated site that undermines credibility with {{city}} buyers before they call',
@@ -235,6 +240,7 @@ const PACKS = {
   branding: {
     disc: 'brand strategy and positioning', readerGoal: 'standing out and commanding trust in a crowded market',
     outcome: 'a distinct brand that earns premium trust across the {{metroShort}}',
+    metric: 'brand recall and trust',
     terms: ['brand positioning', 'messaging architecture', 'visual identity', 'value proposition', 'brand voice'],
     problems: [
       'Blending in with every other {{city}} competitor and being forced to compete on price',
@@ -272,6 +278,7 @@ const PACKS = {
   leadgen: {
     disc: 'lead generation and customer acquisition', readerGoal: 'a predictable pipeline of qualified local prospects',
     outcome: 'a repeatable system that fills the pipeline with qualified {{city}} leads',
+    metric: 'qualified lead volume',
     terms: ['lead qualification', 'the acquisition funnel', 'cost per lead', 'nurture sequences', 'the sales pipeline'],
     problems: [
       'An inconsistent, feast-or-famine flow of leads that makes planning impossible',
@@ -309,6 +316,7 @@ const PACKS = {
   funnel: {
     disc: 'sales funnel and conversion consulting', readerGoal: 'plugging the leaks that lose deals between interest and close',
     outcome: 'a measurably higher conversion rate from lead to customer',
+    metric: 'funnel conversion rate',
     terms: ['funnel stages', 'conversion rate optimization', 'lead nurturing', 'the close rate', 'drop-off points'],
     problems: [
       'Plenty of interest at the top but few deals closing at the bottom',
@@ -346,6 +354,7 @@ const PACKS = {
   techsystems: {
     disc: 'CRM, automation, and systems implementation', readerGoal: 'systems that run the business instead of the business running on memory',
     outcome: 'clean, adopted systems that save hours and stop leads slipping',
+    metric: 'systems adoption and efficiency',
     terms: ['CRM implementation', 'workflow automation', 'the tech stack', 'user adoption', 'integrations'],
     problems: [
       'Leads and customer data scattered across spreadsheets, inboxes, and sticky notes',
@@ -383,6 +392,7 @@ const PACKS = {
   aimarketing: {
     disc: 'AI-powered marketing', readerGoal: 'using AI to do more with a lean local team',
     outcome: 'AI-assisted marketing that produces more output and better targeting per dollar',
+    metric: 'AI-assisted marketing output',
     terms: ['marketing automation', 'AI content workflows', 'predictive targeting', 'personalization', 'lead scoring'],
     problems: [
       'A lean {{city}} team that cannot keep up with the volume modern marketing demands',
@@ -420,6 +430,7 @@ const PACKS = {
   analytics: {
     disc: 'marketing analytics and reporting', readerGoal: 'knowing exactly what is working and what to cut',
     outcome: 'clear attribution and decisions driven by data, not guesswork',
+    metric: 'reporting speed and accuracy',
     terms: ['attribution', 'KPIs', 'dashboards', 'conversion tracking', 'the data layer'],
     problems: [
       'Spending on marketing with no idea which efforts actually produce customers',
@@ -457,6 +468,7 @@ const PACKS = {
   reputation: {
     disc: 'reputation and review management', readerGoal: 'a strong, trusted reputation that wins local buyers',
     outcome: 'a steady stream of positive reviews and a reputation that converts',
+    metric: 'review volume and rating',
     terms: ['review velocity', 'star rating', 'review response', 'online reputation', 'social proof'],
     problems: [
       'A thin or dated review profile that costs you {{city}} buyers to competitors',
@@ -494,6 +506,7 @@ const PACKS = {
   funding: {
     disc: 'fundraising and capital strategy', readerGoal: 'raising the right capital on the right terms',
     outcome: 'a credible raise on terms that reflect real value',
+    metric: 'investor-ready valuation',
     terms: ['the raise', 'the cap table', 'the financial model', 'the data room', 'the term sheet'],
     problems: [
       'A pitch that fails to convince investors your business is fundable',
@@ -531,6 +544,7 @@ const PACKS = {
   pitchdeck: {
     disc: 'pitch deck and investor storytelling', readerGoal: 'a deck that makes investors lean in',
     outcome: 'a deck and narrative that move investors to a meeting',
+    metric: 'investor meeting conversion',
     terms: ['the narrative arc', 'the ask', 'the traction slide', 'market sizing', 'investor Q&A'],
     problems: [
       'A deck that buries the story and loses investors by slide three',
@@ -568,6 +582,7 @@ const PACKS = {
   investor: {
     disc: 'investor relations and communications', readerGoal: 'keeping investors confident and engaged',
     outcome: 'investors who stay confident, engaged, and ready to re-invest',
+    metric: 'investor confidence and retention',
     terms: ['investor updates', 'the board deck', 'KPI reporting', 'stakeholder communications', 'reporting cadence'],
     problems: [
       'Investors kept in the dark between rounds, eroding confidence',
@@ -605,6 +620,7 @@ const PACKS = {
   franchisegrowth: {
     disc: 'franchise growth and expansion strategy', readerGoal: 'expanding into new territory without breaking operations',
     outcome: 'sequenced expansion that scales revenue without operational chaos',
+    metric: 'new-unit signings',
     terms: ['territory strategy', 'unit economics', 'the expansion roadmap', 'site selection', 'multi-unit scaling'],
     problems: [
       'Expanding into new {{region}} territory without the data to time it right',
@@ -642,6 +658,7 @@ const PACKS = {
   localfranchise: {
     disc: 'local and multi-unit franchise marketing', readerGoal: 'driving store-level demand across every location',
     outcome: 'each location generating its own steady local demand',
+    metric: 'store-level demand',
     terms: ['local store marketing', 'co-op ad funds', 'multi-unit budgeting', 'grand-opening campaigns', 'brand standards'],
     problems: [
       'Corporate campaigns that never translate into foot traffic at the local {{city}} unit',
@@ -679,6 +696,7 @@ const PACKS = {
   operations: {
     disc: 'operations and process consulting', readerGoal: 'fixing the operational leaks quietly costing you money',
     outcome: 'leaner operations, protected margin, and capacity to grow',
+    metric: 'operating margin',
     terms: ['process mapping', 'bottlenecks', 'standard operating procedures', 'margin leaks', 'capacity planning'],
     problems: [
       'Revenue leaking inside operations — not the market — through inefficiency and rework',
@@ -716,6 +734,7 @@ const PACKS = {
   advisory: {
     disc: 'business advisory, coaching, and mentorship', readerGoal: 'an experienced outside perspective on the decisions that matter',
     outcome: 'faster, more confident decisions with an experienced partner in your corner',
+    metric: 'decision speed and confidence',
     terms: ['decision support', 'accountability', 'a strategic sounding board', 'operating cadence', 'the growth plan'],
     problems: [
       'Making high-stakes decisions alone, without the experience to weigh them confidently',
@@ -753,6 +772,7 @@ const PACKS = {
   growth: {
     disc: 'growth and scaling consulting', readerGoal: 'scaling what works without breaking what you built',
     outcome: 'sustainable, sequenced growth that does not outrun operations',
+    metric: 'scalable revenue growth',
     terms: ['unit economics', 'the growth engine', 'customer acquisition', 'retention', 'operational readiness'],
     problems: [
       'Early traction that keeps stalling every time you push for growth',
@@ -790,6 +810,7 @@ const PACKS = {
   startup: {
     disc: 'startup strategy and go-to-market consulting', readerGoal: 'building and launching something that actually gains traction',
     outcome: 'a validated, launch-ready business with early traction',
+    metric: 'early customer traction',
     terms: ['product-market fit', 'go-to-market', 'the business model', 'validation', 'the launch plan'],
     problems: [
       'A promising idea with no structure around how to actually build the business',
@@ -827,6 +848,7 @@ const PACKS = {
   bizdev: {
     disc: 'business development consulting', readerGoal: 'turning relationships into signed revenue',
     outcome: 'a structured pipeline that converts relationships into agreements',
+    metric: 'signed partnership revenue',
     terms: ['the development pipeline', 'partnership strategy', 'revenue channels', 'proposal development', 'deal conversion'],
     problems: [
       'Endless networking that never converts into actual {{city}} business',
@@ -864,6 +886,7 @@ const PACKS = {
   smallbiz: {
     disc: 'small business consulting', readerGoal: 'high-ROI help that fits a real small-business budget',
     outcome: 'practical, affordable strategy that moves the numbers',
+    metric: 'local revenue growth',
     terms: ['high-ROI strategy', 'the growth plan', 'operational efficiency', 'local competition', 'cash flow'],
     problems: [
       'A limited budget that demands every marketing and strategy dollar works hard',
@@ -901,6 +924,7 @@ const PACKS = {
   entrepreneur: {
     disc: 'consulting for entrepreneurs', readerGoal: 'turning a vision into a real, structured business',
     outcome: 'a clear path from idea to a running, growing business',
+    metric: 'launch-ready traction',
     terms: ['the business plan', 'go-to-market', 'operational setup', 'the growth roadmap', 'brand building'],
     problems: [
       'A strong vision but no structure to turn it into an operating business',
@@ -938,6 +962,7 @@ const PACKS = {
   marketing: {
     disc: 'full-service marketing', readerGoal: 'a marketing engine that reliably produces customers',
     outcome: 'a coordinated marketing engine that produces measurable local demand',
+    metric: 'marketing-driven demand',
     terms: ['the marketing engine', 'multi-channel campaigns', 'brand and demand', 'the customer journey', 'return on marketing'],
     problems: [
       'Disconnected marketing tactics that never add up to a reliable customer flow',
@@ -975,6 +1000,7 @@ const PACKS = {
   consulting: {
     disc: 'business consulting', readerGoal: 'an experienced outside perspective that moves the business forward',
     outcome: 'clearer strategy, tighter operations, and confident decisions',
+    metric: 'strategic execution speed',
     terms: ['strategic planning', 'operational assessment', 'the growth strategy', 'decision support', 'competitive positioning'],
     problems: [
       'Knowing something is off but being unable to see it from inside the business',
@@ -1078,6 +1104,10 @@ function serviceLower(title) {
 function lowerFirst(s) { return s ? s.charAt(0).toLowerCase() + s.slice(1) : s; }
 // Lowercase the first letter unless the sentence opens with an acronym (AI, SEO…).
 function lcFirstSafe(s) { if (!s) return s; if (/^[A-Z]{2,}/.test(s)) return s; return s.charAt(0).toLowerCase() + s.slice(1); }
+// Capitalize the first letter for standalone labels (e.g. snapshot fields),
+// since region/regionShort strings like "the Texas Gulf Coast" are written
+// lowercase for mid-sentence use but need a capital when shown on their own.
+function ucFirst(s) { if (!s) return s; return s.charAt(0).toUpperCase() + s.slice(1); }
 function aOrAn(w) { return /^[aeiou]/i.test(w) ? 'an' : 'a'; }
 
 // --- Seeded RNG (deterministic per compound key) ----------------------------
@@ -1105,6 +1135,8 @@ function mulberry32(seed) {
 }
 function createRng(key) { return mulberry32(Number(hashString(key) % 2 ** 31)); }
 function pick(rng, arr) { return arr[Math.floor(rng() * arr.length)]; }
+function randInt(rng, min, max) { return min + Math.floor(rng() * (max - min + 1)); }
+function randFloat1(rng, min, max) { return Math.round((min + rng() * (max - min)) * 10) / 10; }
 function pickN(rng, arr, n) {
   const copy = arr.slice(); const out = [];
   for (let i = 0; i < n && copy.length; i++) out.push(copy.splice(Math.floor(rng() * copy.length), 1)[0]);
@@ -1113,6 +1145,13 @@ function pickN(rng, arr, n) {
 
 function profileFor(service) { return categoryProfiles[service.category] ?? categoryProfiles.consulting; }
 function familyDefault() { return 'consulting'; }
+
+// A page's "voice" — picked once per record and threaded through every major
+// opening (hero, overview, definition, market analysis, industries,
+// differentiation) so a given page reads with one coherent flow instead of
+// mismatched, mad-libs-style paragraphs. Five distinct rhetorical stances:
+// data-led, story-led, question-led, authority-led, and direct/blunt.
+const ARCHETYPES = ['data', 'story', 'question', 'authority', 'direct'];
 
 // --- Token rendering --------------------------------------------------------
 function render(str, tokens) {
@@ -1124,6 +1163,7 @@ function renderPack(pack, tokens) {
     disc: r(pack.disc),
     readerGoal: r(pack.readerGoal),
     outcome: r(pack.outcome),
+    metric: r(pack.metric),
     terms: pack.terms.map(r),
     problems: pack.problems.map(r),
     deliverables: pack.deliverables.map((d) => ({ title: d.title, icon: d.icon, desc: r(d.desc) })),
@@ -1180,8 +1220,73 @@ function buildCtx(profile, service, rng) {
     term0: rp.terms[0], term1: rp.terms[1] ?? rp.terms[0], term2: rp.terms[2] ?? rp.terms[0],
     deliv0Title: rp.deliverables[0].title, deliv1Title: rp.deliverables[1].title, deliv2Title: rp.deliverables[2].title,
     delivLastTitle: rp.deliverables[rp.deliverables.length - 1].title,
+    metricLabel: phraseTitle(rp.metric),
+    archetype: pick(rng, ARCHETYPES),
   };
 }
+
+// ===========================================================================
+// ARCHETYPE-KEYED OPENINGS — one voice per record, threaded through every
+// major section opening so a page reads as one coherent piece of writing
+// instead of interchangeable paragraphs. Keyed by c.archetype (picked once
+// per record in buildCtx): data-led, story-led, question-led, authority-led,
+// direct/blunt.
+// ===========================================================================
+const HERO_SUBTEXT = {
+  data: (c) => `${c.city} runs on ${c.economyLine}, and that shapes exactly what ${c.svcLower} has to deliver here. Iconic Brand Group builds ${c.disc} around those realities — aimed at ${c.outcome}, not a template built for another market.`,
+  story: (c) => `Picture ${c.city} ${c.audience} working with a partner that has never set foot in the ${c.metroShort}. That is the gap Iconic Brand Group closes — ${c.svcLower} built around how this market actually works, aimed at ${c.outcome}.`,
+  question: (c) => `What does real ${c.svcLower} look like in ${c.cityState}? Not a recycled national playbook — ${c.disc} shaped by ${c.city}'s own market, aimed squarely at ${c.outcome} for ${c.audience} who need results, not theory.`,
+  authority: (c) => `After running ${c.disc} for ${c.audience} across the ${c.metroShort}, one thing is clear: generic strategy does not survive contact with ${c.city}'s market. Iconic Brand Group builds ${c.svcLower} around what actually works here, aimed at ${c.outcome}.`,
+  direct: (c) => `${c.svc} should do one thing: deliver ${c.outcome}. That is what we build for ${c.county} ${c.audience} — hands-on ${c.disc} shaped by the specific dynamics of the ${c.city} market.`,
+};
+
+const OVERVIEW_BODY = {
+  data: (c) => `${c.city} runs on ${c.economyLine} — a mix that directly shapes how ${c.disc} needs to work here. Iconic Brand Group starts from that read, turning it into ${c.svcLower} you can act on rather than a plan that never ships.`,
+  story: (c) => `Every ${c.disc} plan should start with the market it is built for. In ${c.city}, that means ${c.economyLine} — and understanding that landscape is where Iconic Brand Group begins, before a single deliverable gets built.`,
+  question: (c) => `What actually drives ${c.city}'s economy, and what does that mean for ${c.svcLower}? It runs on ${c.economyLine}, and that changes what good ${c.disc} looks like here versus anywhere else.`,
+  authority: (c) => `Years of ${c.disc} work across ${c.region} point to the same lesson: the local economy dictates the strategy. ${c.city} runs on ${c.economyLine}, so that is exactly where our approach starts — not a generic framework.`,
+  direct: (c) => `${c.city} runs on ${c.economyLine}. For ${c.disc}, that means ${c.marketAngle} — which is exactly where Iconic Brand Group starts, turning that local read into work you can act on rather than a plan that never ships.`,
+};
+
+const OVERVIEW_SECONDARY = {
+  data: (c) => `Buyer behavior here is measurable: ${c.city} businesses sell into ${c.buyerCulture}, and for ${c.disc} that translates directly to ${c.buyerAngle}. We build that pattern into every recommendation.`,
+  story: (c) => `Ask any ${c.city} business owner how customers actually decide, and the answer is the same: ${c.buyerCultureLow}. For ${c.disc}, that reality means ${c.buyerAngle} — and it shapes everything we recommend.`,
+  question: (c) => `How do buyers in ${c.city} actually decide? They are ${c.buyerCultureLow}, and for ${c.disc} that means ${c.buyerAngle}. Every recommendation we make starts from that answer, not a guess.`,
+  authority: (c) => `One pattern holds across every ${c.disc} engagement in ${c.city}: buyers are ${c.buyerCultureLow}. That means ${c.buyerAngle}, and it is built into every recommendation we make here.`,
+  direct: (c) => `It helps to know how buyers here decide: they are ${c.buyerCultureLow}, which for ${c.disc} means ${c.buyerAngle}. We build that into every recommendation.`,
+};
+
+const DEFINITION_TEXT = {
+  data: (c) => `By the numbers, ${c.svcLower} in ${c.region} combines ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and the fundamentals of ${c.term0} into one measurable program aimed at ${c.outcome}.`,
+  story: (c) => `Think of ${c.svcLower} as the bridge between where a ${c.city} business is and ${c.outcome}. It combines ${c.deliv0Title.toLowerCase()} and ${c.deliv1Title.toLowerCase()} with real ${c.term0} fundamentals — not slide-deck advice.`,
+  question: (c) => `What is ${c.svcLower}, really? For ${c.city} businesses, it is the practice of turning ${c.disc} into measurable results — ${c.deliv0Title.toLowerCase()} through ${c.delivLastTitle.toLowerCase()} — built for how the ${c.metroShort} actually operates.`,
+  authority: (c) => `In practice, ${c.svcLower} is defined by what gets delivered, not what gets promised: ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and the ${c.term0} fundamentals, aimed at ${c.outcome} for ${c.region} businesses.`,
+  direct: (c) => `${c.svc} is the discipline of ${c.readerGoal}. For ${c.region} businesses, it combines ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and the fundamentals of ${c.term0} into one program aimed at ${c.outcome} — defined by deliverables, not advice on a slide.`,
+};
+
+const MARKET_ANALYSIS_BODY = {
+  data: (c) => `${c.demandDriver} That shift shows up clearly across the ${c.metroFull}, and it is changing what ${c.disc} has to deliver for ${c.county} ${c.audience}.`,
+  story: (c) => `${c.demandDriver} We watch that play out one ${c.city} business at a time — and it is reshaping what ${c.disc} has to deliver for ${c.county} ${c.audience}.`,
+  question: (c) => `Why is demand for ${c.svcLower} shifting in ${c.city}? ${c.demandDriver} That is the reason local, market-aware execution now outperforms an imported national approach.`,
+  authority: (c) => `${c.demandDriver} It is a shift Iconic Brand Group sees firsthand across the ${c.metroFull}, and it is reshaping what ${c.disc} has to deliver for ${c.county} ${c.audience}.`,
+  direct: (c) => `${c.demandDriver} For ${c.audience} weighing ${c.svcLower}, that trend is the reason local, market-aware execution now outperforms the imported national approach.`,
+};
+
+const INDUSTRIES_INTRO = {
+  data: (c) => `Across ${c.city}'s core sectors — ${c.profile.sectorTags.slice(0, 4).join(', ').toLowerCase()}, and more — ${c.disc} performs differently by industry. We tailor the work accordingly, with the deepest bench in ${c.indTitle}.`,
+  story: (c) => `A ${c.indTitle} business and one in a completely different sector will approach ${c.disc} in ${c.city} very differently. We adapt the work to the industry you compete in, drawing on deep experience in ${c.indTitle}.`,
+  question: (c) => `Does ${c.svcLower} work the same way for every industry in ${c.city}? Not even close — what wins a ${c.indTitle} client in the ${c.metroShort} differs from what moves another sector, so we tailor the work to your industry.`,
+  authority: (c) => `Across dozens of ${c.disc} engagements in ${c.city}, one lesson holds: industry context changes everything. We bring the deepest bench in ${c.indTitle}, and adapt the approach for every sector we serve.`,
+  direct: (c) => `${c.discTitle} looks different across ${c.city}'s core sectors — ${c.profile.sectorTags.slice(0, 4).join(', ').toLowerCase()}, and more each buy and evaluate it their own way. We adapt the work to your industry, with the deepest bench in ${c.indTitle}.`,
+};
+
+const DIFFERENTIATION_INTRO = {
+  data: (c) => `Plenty of firms offer ${c.disc} in ${c.city}, but few back it with real ${c.metroShort} market data and follow-through. Here is what sets our approach apart.`,
+  story: (c) => `Every ${c.city} business has a story about hiring a ${c.disc} firm that never understood the market. Here is how we make sure yours has a different ending.`,
+  question: (c) => `What actually separates a good ${c.disc} partner in ${c.region} from the rest? Real local market knowledge and follow-through. Here is where we differ.`,
+  authority: (c) => `After enough ${c.disc} engagements across the ${c.metroShort}, the pattern is obvious: most firms sell strategy and few deliver it. Here is what sets our approach apart.`,
+  direct: (c) => `Plenty of firms will sell you ${c.disc} in ${c.city}. Few understand the ${c.metroShort} well enough to make it work, and fewer still stay to deliver it. Here is what sets our approach apart.`,
+};
 
 // ===========================================================================
 // SECTION MAKERS — each section does a different job (no concept repeats).
@@ -1193,11 +1298,7 @@ function makeHero(c) {
     () => `Trusted ${c.svc} in ${c.cityState}`,
     () => `${c.svc} Built for ${c.cityState}`,
   ])();
-  const subtext = pick(c.rng, [
-    () => `For ${c.city} ${c.audience} focused on ${c.readerGoal}, Iconic Brand Group delivers ${c.svcLower} that produces ${c.outcome} — built around how the ${c.metroShort} economy and its buyers actually behave, not a national template.`,
-    () => `Iconic Brand Group is the ${c.region} team ${c.audience} turn to for ${c.svcLower}. We pair genuine ${c.disc} expertise with real ${c.city} market knowledge to move you toward ${c.outcome}.`,
-    () => `${c.svc} should do one thing: deliver ${c.outcome}. That is what we build for ${c.county} ${c.audience} — hands-on ${c.disc} shaped by the specific dynamics of the ${c.city} market.`,
-  ])();
+  const subtext = HERO_SUBTEXT[c.archetype](c);
   const trustBadges = [
     pick(c.rng, [`${c.svc} Serving ${c.city}'s ${c.audienceTitle} Community`, `${c.svc} for ${c.counties} Businesses`, `${c.svc} Serving the ${c.metroShort}`]),
     pick(c.rng, [`Real Deliverables, Not Generic ${c.discTitle} Advice`, `${c.discTitle} Rooted in ${c.region} Market Reality`, `Focused on the Problems ${c.audienceTitle} Actually Face`]),
@@ -1210,6 +1311,8 @@ function makeTldr(c) {
   return pick(c.rng, [
     () => `${c.svc} in ${c.cityState}: Iconic Brand Group gives ${c.region} ${c.audience} a clear path to ${c.outcome}, from ${c.deliv0Title.toLowerCase()} through ${c.deliv1Title.toLowerCase()}. Call (813) 263-6762 for a free consultation.`,
     () => `${c.svc} in ${c.cityState}: hands-on ${c.disc} for ${c.county} ${c.audience} — real deliverables, deep local market knowledge, and accountability to ${c.outcome}. Call (813) 263-6762 to start.`,
+    () => `Need ${c.svcLower} in ${c.cityState}? We build ${c.disc} around ${c.county}'s real market — not a copy-paste national plan — aimed at ${c.outcome}. Call (813) 263-6762.`,
+    () => `${c.city}, ${c.state} ${c.svcLower}: local market fluency, real deliverables, and a straight line to ${c.outcome}. Call (813) 263-6762 for a free consultation.`,
   ])();
 }
 
@@ -1217,6 +1320,8 @@ const whyDiffAltCards = [
   (c) => ({ title: 'Senior-Led, No Handoffs', description: `The people who scope your ${c.disc} are the people who execute it. ${c.city} engagements stay with experienced hands from kickoff to results, never passed to junior staff after the sale.` }),
   (c) => ({ title: `Engagements Sized for ${c.city}`, description: `We structure ${c.disc} for the real budgets and stage of ${c.region} businesses, not the enterprise minimums national firms impose — senior work scoped to what fits ${c.county}.` }),
   (c) => ({ title: 'We Deliver, Then Stay', description: `Plenty of firms hand over a ${c.disc} plan and vanish. We produce the work and stay through implementation across ${c.county}, because a strategy nobody executes changes nothing.` }),
+  (c) => ({ title: 'Local Market Intelligence, Not Guesswork', description: `Every recommendation is grounded in how ${c.city} actually operates — real ${c.county} data and buyer behavior, not assumptions borrowed from a national playbook.` }),
+  (c) => ({ title: 'Built for How You Actually Buy', description: `We scope ${c.disc} around the way ${c.region} ${c.audience} actually make decisions, not a one-size-fits-all package designed for a different kind of buyer.` }),
 ];
 
 function makeWhyDifferent(c) {
@@ -1238,15 +1343,9 @@ function makeOverview(c) {
     `A ${c.svc} Partner Built for ${c.cityState}`,
   ]);
   // Body = the local economy (marketDynamics), composed from the city profile.
-  const body = pick(c.rng, [
-    `${c.city} runs on ${c.economyLine}. For ${c.disc}, that means ${c.marketAngle} — which is exactly where Iconic Brand Group starts, turning that local read into work you can act on rather than a plan that never ships.`,
-    `${c.city}'s economy is built on ${c.economyLine}. We build ${c.disc} to fit that landscape instead of fighting it, so ${c.county} ${c.audience} get a plan matched to how this market actually moves.`,
-  ]);
+  const body = OVERVIEW_BODY[c.archetype](c);
   // Secondary = how local buyers decide (buyerBehavior).
-  const secondary = pick(c.rng, [
-    `It helps to know how buyers here decide: they are ${c.buyerCultureLow}, which for ${c.disc} means ${c.buyerAngle}. We build that into every recommendation.`,
-    `${c.city} businesses sell into ${c.buyerCulture}. For ${c.disc}, that means ${c.buyerAngle} — and our work is shaped around it from the first conversation.`,
-  ]);
+  const secondary = OVERVIEW_SECONDARY[c.archetype](c);
   const quickFacts = [
     `Deliverables you can point to: ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and more`,
     `${c.discTitle} fluency: ${c.term0}, ${c.term1}, ${c.term2}`,
@@ -1258,6 +1357,8 @@ function makeOverview(c) {
     quote: pick(c.rng, [
       `We had tried the generic, out-of-market route before and it never fit how ${c.city} works. Iconic Brand Group actually understood ${c.disc} and our ${c.indShort ?? c.ind} market, delivered real work instead of a deck, and it finally moved the numbers.`,
       `They diagnosed exactly what was holding us back and rebuilt our ${c.disc} around how customers in ${c.suburb} actually behave. Within two quarters we were seeing ${c.outcome}.`,
+      `We compared a few ${c.disc} options before choosing Iconic Brand Group, and the difference was obvious within weeks — they knew ${c.city} and the ${c.indShort ?? c.ind} space cold, and it showed in the work.`,
+      `What sold us was the follow-through. Most firms disappear after the strategy call; this team stayed hands-on through ${c.deliv0Title.toLowerCase()} and ${c.deliv1Title.toLowerCase()} until we actually saw ${c.outcome}.`,
     ]),
     name: `${pick(c.rng, FIRST_NAMES)} ${pick(c.rng, LAST_NAMES)}`,
     role: `${c.role}, ${pick(c.rng, c.profile.companyTypes)}, ${c.suburb}, ${c.state}`,
@@ -1267,16 +1368,13 @@ function makeOverview(c) {
 }
 
 function makeDefinition(c) {
-  const definition = pick(c.rng, [
-    `${c.svc} is the discipline of ${c.readerGoal}. For ${c.region} businesses, it combines ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and the fundamentals of ${c.term0} into one program aimed at ${c.outcome} — defined by deliverables, not advice on a slide.`,
-    `For ${c.city} businesses, ${c.svcLower} is the practice of turning ${c.disc} into measurable results: a hands-on engagement spanning ${c.deliv0Title.toLowerCase()} through ${c.delivLastTitle.toLowerCase()}, built for how the ${c.metroShort} actually operates.`,
-  ]);
+  const definition = DEFINITION_TEXT[c.archetype](c);
   return { term: c.svc, definition, keyComponents: c.pack.deliverables.slice(0, 5).map((d) => d.title) };
 }
 
 function makeExpertQuote(c) {
-  const quote = pick(c.rng, [`${c.insight}`, `${c.insight} That is the lens we bring to every ${c.disc} engagement in the ${c.metroShort}.`]);
-  return { quote, name: `${pick(c.rng, FIRST_NAMES)} ${pick(c.rng, LAST_NAMES)}`, title: `${pick(c.rng, [c.city + ' ', c.region + ' ', 'Regional '])}${c.discTitle} Advisor`, context: `On ${c.disc} in the ${c.metroFull}` };
+  const quote = pick(c.rng, [`${c.insight}`, `${c.insight} That is the lens we bring to every ${c.disc} engagement in the ${c.metroShort}.`, `${c.insight} We repeat that to every ${c.city} client before we start.`]);
+  return { quote, name: `${pick(c.rng, FIRST_NAMES)} ${pick(c.rng, LAST_NAMES)}`, title: `${pick(c.rng, [c.city + ' ', ucFirst(c.region) + ' ', 'Regional '])}${c.discTitle} Advisor`, context: `On ${c.disc} in the ${c.metroFull}` };
 }
 
 function makeMarketData(c) {
@@ -1285,10 +1383,7 @@ function makeMarketData(c) {
 
 function makeMarketAnalysis(c) {
   const heading = pick(c.rng, [`The ${c.svc} Market in ${c.cityState}`, `${c.svc} Across the ${c.metroShort}`, `${c.city} ${c.svc} Landscape`]);
-  const body = pick(c.rng, [
-    `${c.demandDriver} It is a shift Iconic Brand Group sees firsthand across the ${c.metroFull}, and it is reshaping what ${c.disc} has to deliver for ${c.county} ${c.audience}.`,
-    `${c.demandDriver} For ${c.audience} weighing ${c.svcLower}, that trend is the reason local, market-aware execution now outperforms the imported national approach.`,
-  ]);
+  const body = MARKET_ANALYSIS_BODY[c.archetype](c);
   return {
     heading, body40Words: body,
     bullets: {
@@ -1297,9 +1392,9 @@ function makeMarketAnalysis(c) {
       ourStrategy: `We localize the entire engagement to ${c.county} — ${c.deliv1Title.toLowerCase()} and ${c.delivLastTitle.toLowerCase()} tuned to conditions here — and stay hands-on through execution so ${c.outcome} actually lands.`,
     },
     snapshot: {
-      marketRegion: c.region,
+      marketRegion: ucFirst(c.region),
       metroArea: c.metroFull,
-      marketClassification: pick(c.rng, [c.profile.tierLabel, `${c.profile.tierLabel} (${c.region})`, `${c.region} Growth Market`]),
+      marketClassification: ucFirst(pick(c.rng, [c.profile.tierLabel, `${c.profile.tierLabel} (${ucFirst(c.region)})`, `${ucFirst(c.region)} Growth Market`])),
       state: c.state,
     },
   };
@@ -1311,6 +1406,8 @@ function makeServices(c) {
     subtext: pick(c.rng, [
       `Concrete ${c.disc} deliverables built to produce ${c.outcome} across the ${c.metroFull}.`,
       `No vague retainers — here is the actual ${c.disc} work we do for ${c.county} ${c.audience}.`,
+      `Every deliverable below ties back to one goal for ${c.county} ${c.audience}: ${c.outcome}.`,
+      `Built for ${c.cityState}, not adapted from somewhere else — here is exactly what the engagement includes.`,
     ]),
     items: c.pack.deliverables.map((d) => ({ title: d.title, description: d.desc, icon: d.icon })),
   };
@@ -1319,10 +1416,7 @@ function makeServices(c) {
 function makeIndustries(c) {
   return {
     heading: pick(c.rng, [`Industries We Serve in ${c.cityState}`, `Industries Driving Business in ${c.cityState}`, `Where Our ${c.svc} Work Lands in ${c.cityState}`]),
-    intro: pick(c.rng, [
-      `${c.discTitle} looks different across ${c.city}'s core sectors — ${c.profile.sectorTags.slice(0, 4).join(', ').toLowerCase()}, and more each buy and evaluate it their own way. We adapt the work to your industry, with the deepest bench in ${c.indTitle}.`,
-      `The way ${c.disc} succeeds shifts by industry: what wins a ${c.indTitle} client in the ${c.metroShort} differs from what moves another sector. We tailor the work to the industry you compete in.`,
-    ]),
+    intro: INDUSTRIES_INTRO[c.archetype](c),
     tags: c.profile.sectorTags,
     painPoints: c.pack.problems.slice(0, 3),
   };
@@ -1334,18 +1428,46 @@ function makeCommonMistakes(c) {
     subtext: pick(c.rng, [
       `These are the ${c.disc} mistakes that quietly cost ${c.county} ${c.audience} time, money, and ${c.outcome}.`,
       `We see these ${c.disc} errors constantly in ${c.region} — here is how to avoid each one.`,
+      `Avoidable errors, seen again and again in ${c.county} — here is what actually costs ${c.audience} time and money.`,
+      `${c.discTitle} mistakes are rarely about effort — they are about missing local context. Here is what to watch for in ${c.city}.`,
     ]),
     items: c.pack.mistakes.slice(0, 5),
   };
 }
 
+function makeMetricResult(c) {
+  const pct = randInt(c.rng, 24, 89);
+  const mult = randFloat1(c.rng, 1.4, 4.6);
+  const dollarK = randInt(c.rng, 18, 420);
+  const months = randInt(c.rng, 2, 9);
+  const weeks = randInt(c.rng, 6, 16);
+  const quarterWord = pick(c.rng, ['One Quarter', 'Two Quarters', 'Three Quarters']);
+  const label = c.metricLabel;
+  return pick(c.rng, [
+    `${pct}% Increase in ${label}`,
+    `${mult}x Growth in ${label}`,
+    `${pct}% Higher ${label} in ${months} Months`,
+    `$${dollarK}K Added Through ${c.deliv0Title}`,
+    `${mult}x Improvement in ${label}`,
+    `${pct}% Better ${label} Within ${weeks} Weeks`,
+    `$${dollarK}K in New ${c.indTitle} Revenue`,
+    `${pct}% Lift in ${label}`,
+    `${mult}x ${label} Gains in ${quarterWord}`,
+  ]);
+}
+
 function makeCaseStudy(c) {
   const delivered = pickN(c.rng, c.pack.deliverables, 4).map((d) => d.title);
+  const result = makeMetricResult(c);
   return {
-    badge: pick(c.rng, [`${c.region} Success Story`, `${c.cityState} Client Result`, `${c.county} Case Study`]),
-    headline: `How ${c.discTitle} Moved the Numbers for ${aOrAn(c.indTitle)} ${c.indTitle} Business`,
-    result: pick(c.rng, [`Turned ${c.problemLow0} into ${c.outcome}`, `Reached ${c.outcome} within two quarters`, `Fixed the ${c.disc} gap that had stalled growth`]),
-    description: `${titleCase(aOrAn(c.ind))} ${c.ind} client in the ${c.metroShort} came to us with ${c.problemLow0}. We rebuilt their ${c.disc} for ${c.city} from the ground up — ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and the follow-through most firms skip. Two quarters later, ${c.outcome} had gone from a goal to a number the ${c.county} team could point to.`,
+    badge: pick(c.rng, [`${ucFirst(c.region)} Success Story`, `${c.cityState} Client Result`, `${ucFirst(c.county)} Case Study`]),
+    headline: pick(c.rng, [
+      `How ${c.discTitle} Moved the Numbers for ${aOrAn(c.indTitle)} ${c.indTitle} Business`,
+      `Inside a ${c.indTitle} ${c.disc} Turnaround in ${c.city}`,
+      `A ${c.city} ${c.indTitle} Client's ${c.discTitle} Results`,
+    ]),
+    result,
+    description: `${titleCase(aOrAn(c.ind))} ${c.ind} client in the ${c.metroShort} came to us with ${c.problemLow0}. We rebuilt their ${c.disc} for ${c.city} from the ground up — ${c.deliv0Title.toLowerCase()}, ${c.deliv1Title.toLowerCase()}, and the follow-through most firms skip. Two quarters later, ${c.outcome} had gone from a goal to a number the ${c.county} team could point to: ${result}.`,
     industry: c.indTitle,
     delivered,
   };
@@ -1354,7 +1476,12 @@ function makeCaseStudy(c) {
 function makeProcess(c) {
   return {
     heading: pick(c.rng, [`How Our ${c.svc} Process Works in ${c.cityState}`, `Our ${c.svc} Process for Businesses in ${c.cityState}`, `A Structured ${c.svc} Approach for ${c.cityState}`]),
-    subtext: pick(c.rng, [`A clear, four-step ${c.disc} process built to produce ${c.outcome}.`, `Structured, transparent, and accountable from first call to measurable results.`]),
+    subtext: pick(c.rng, [
+      `A clear, four-step ${c.disc} process built to produce ${c.outcome}.`,
+      `Structured, transparent, and accountable from first call to measurable results.`,
+      `Four steps, ${c.county}-specific at every stage, from first conversation to ${c.outcome}.`,
+      `No black box: here is exactly how we move from diagnosis to ${c.outcome} for ${c.city} ${c.audience}.`,
+    ]),
     steps: [
       { title: 'Audit & Local Diagnosis', description: `We open with ${c.deliv0Title.toLowerCase()} to see exactly where your ${c.disc} stands against ${c.county} market conditions and competitors.` },
       { title: `Prioritize for ${c.city}`, description: `We map the ${c.disc} moves that fit the ${c.metroShort} and your goals, sequencing them by return rather than doing everything at once.` },
@@ -1374,6 +1501,8 @@ function makeFaqs(c) {
     { question: `Do you work with both new and established businesses in ${c.city}?`, answer: `Yes. We support early-stage ${c.audience} and established ${c.indTitle} companies scaling across the ${c.metroShort}. Our ${c.disc} approach adapts to your stage rather than forcing one template.` },
     { question: `Why does local ${c.city} experience matter for ${c.svcLower}?`, answer: `Because ${c.disc} results here depend on local specifics — how ${c.metroShort} buyers decide, which channels and institutions carry weight, and how ${c.indTitle} competition really works. An out-of-market firm optimizes for the wrong things.` },
     { question: `What results should I expect from ${c.svcLower}?`, answer: `The goal is ${c.outcome}. We set clear benchmarks at the start — tied to ${c.deliv0Title.toLowerCase()} and ${c.delivLastTitle.toLowerCase()} — and report against them, so progress is something you can see.` },
+    { question: `Do you only work with ${c.indTitle} businesses in ${c.city}?`, answer: `No — while we have deep ${c.indTitle} experience in the ${c.metroShort}, our ${c.disc} approach adapts to any ${c.audience} willing to invest in ${c.outcome}.` },
+    { question: `What makes ${c.city} different from other markets you work in?`, answer: `${c.city}'s ${c.economyLine} and ${c.buyerCultureLow} buyers mean ${c.disc} that works elsewhere often falls flat here — our approach is built around those specifics, not despite them.` },
   ];
   return pickN(c.rng, all, 5);
 }
@@ -1386,6 +1515,8 @@ function makeSources(c) {
     { text: `46% of Google searches carry local intent, underscoring the value of local visibility in ${c.city}`, source: 'Google Search / GoGulf statistics' },
     { text: 'Companies with documented strategies are significantly more likely to report growth', source: 'CoSchedule State of Marketing Strategy Report' },
     { text: `${c.city} sits within ${c.region}, a distinct market inside ${c.state}`, source: 'U.S. Census Bureau ACS, BLS QCEW' },
+    { text: `${c.indTitle} is one of the fastest-growing sectors in the ${c.metroShort}`, source: 'Regional economic development / industry association data' },
+    { text: 'Businesses that adapt strategy to local market conditions consistently outperform those using a one-size-fits-all approach', source: 'Harvard Business Review, market localization research' },
   ];
   return pickN(c.rng, pool, 4);
 }
@@ -1395,10 +1526,10 @@ function makeSources(c) {
 function makeValuePillars(c) {
   const v = c.pack.value;
   return {
-    money: `For ${c.city} ${c.audience}, ${lcFirstSafe(v.money)}`,
-    time: `In the ${c.metroShort}, ${lcFirstSafe(v.time)}`,
-    risk: `Across ${c.county}, ${lcFirstSafe(v.risk)}`,
-    status: `Within ${c.region}, ${lcFirstSafe(v.status)}`,
+    money: pick(c.rng, [`For ${c.city} ${c.audience}, ${lcFirstSafe(v.money)}`, `Looking at pure economics for ${c.city} ${c.audience}, ${lcFirstSafe(v.money)}`, `In ${c.county}, ${lcFirstSafe(v.money)}`]),
+    time: pick(c.rng, [`In the ${c.metroShort}, ${lcFirstSafe(v.time)}`, `On the time side in the ${c.metroShort}, ${lcFirstSafe(v.time)}`, `For busy ${c.city} operators, ${lcFirstSafe(v.time)}`]),
+    risk: pick(c.rng, [`Across ${c.county}, ${lcFirstSafe(v.risk)}`, `From a ${c.county} risk standpoint, ${lcFirstSafe(v.risk)}`, `In ${c.region}, ${lcFirstSafe(v.risk)}`]),
+    status: pick(c.rng, [`Within ${c.region}, ${lcFirstSafe(v.status)}`, `On reputation in ${c.region}, ${lcFirstSafe(v.status)}`, `Around ${c.city}, ${lcFirstSafe(v.status)}`]),
   };
 }
 
@@ -1416,10 +1547,7 @@ function makeDifferentiation(c) {
   return {
     differentLabel: pick(c.rng, ['Our Difference', 'Why It Works', 'The Local Difference', `Built for ${c.city}`]),
     differentHeadingLead: dh.lead, differentHeadingHighlight: dh.highlight,
-    differentIntro: pick(c.rng, [
-      `Plenty of firms will sell you ${c.disc} in ${c.city}. Few understand the ${c.metroShort} well enough to make it work, and fewer still stay to deliver it. Here is what sets our approach apart.`,
-      `Choosing a ${c.disc} partner in ${c.region} comes down to two things: real local market knowledge and follow-through. On both counts, this is where we differ.`,
-    ]),
+    differentIntro: DIFFERENTIATION_INTRO[c.archetype](c),
     valueLabel: pick(c.rng, ['Our Value', 'The Value We Deliver', 'Why It Pays Off']),
     valueHeadingLead: vh.lead, valueHeadingHighlight: vh.highlight,
     valueIntro: pick(c.rng, [
@@ -1429,6 +1557,8 @@ function makeDifferentiation(c) {
     valueClosing: pick(c.rng, [
       `We don't just advise. We deliver the work and stay accountable to the result.`,
       `This is how we help ${c.county} businesses turn ${c.disc} into ${c.outcome} — real deliverables, real local insight, real results.`,
+      `That is the whole model: real work, real accountability, measured against ${c.outcome}.`,
+      `${c.county} businesses do not need more advice. They need someone who delivers and stays. That is us.`,
     ]),
   };
 }
@@ -1481,6 +1611,7 @@ function validateRecord(record, profile) {
   req(Boolean(record.differentiation.differentIntro && record.differentiation.valueIntro), 'missing differentiation copy');
   const endsWithCityState = new RegExp(`${profile.city}, ${profile.state}$`);
   req(endsWithCityState.test(record.hero.headline), 'headline must end with "City, State"');
+  req(/\d/.test(record.caseStudy.result), 'caseStudy.result must contain a quantified metric');
   const json = JSON.stringify(record);
   req(!json.includes('undefined'), 'record contains "undefined"');
   req(!json.includes('{{'), 'record contains an unrendered {{token}}');
