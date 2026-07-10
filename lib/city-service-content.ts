@@ -49,7 +49,18 @@ const azCitiesContent = require('../json/az-cities.json');
 const waCitiesContent = require('../json/wa-cities.json');
 const ncCitiesContent = require('../json/nc-cities.json');
 const miCitiesContent = require('../json/mi-cities.json');
-const txCitiesContent = require('../json/tx-cities.json');
+// TX exceeds the 50MB single-file cap (scripts/generate-city-content.mjs
+// splits by city into `<state>-cities-part<N>.json`); as more large states
+// are added, add one require() per part here.
+const txCitiesContent1 = require('../json/tx-cities-part1.json');
+const txCitiesContent2 = require('../json/tx-cities-part2.json');
+const caCitiesContent1 = require('../json/ca-cities-part1.json');
+const caCitiesContent2 = require('../json/ca-cities-part2.json');
+const caCitiesContent3 = require('../json/ca-cities-part3.json');
+const caCitiesContent4 = require('../json/ca-cities-part4.json');
+const caCitiesContent5 = require('../json/ca-cities-part5.json');
+const flCitiesContent1 = require('../json/fl-cities-part1.json');
+const flCitiesContent2 = require('../json/fl-cities-part2.json');
 
 export interface CityServiceContent {
   key: string;
@@ -228,7 +239,15 @@ const cityServiceContentByKey = {
   ...(waCitiesContent as unknown as Record<string, CityServiceContentRecord>),
   ...(ncCitiesContent as unknown as Record<string, CityServiceContentRecord>),
   ...(miCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(txCitiesContent as unknown as Record<string, CityServiceContentRecord>),
+  ...(txCitiesContent1 as unknown as Record<string, CityServiceContentRecord>),
+  ...(txCitiesContent2 as unknown as Record<string, CityServiceContentRecord>),
+  ...(caCitiesContent1 as unknown as Record<string, CityServiceContentRecord>),
+  ...(caCitiesContent2 as unknown as Record<string, CityServiceContentRecord>),
+  ...(caCitiesContent3 as unknown as Record<string, CityServiceContentRecord>),
+  ...(caCitiesContent4 as unknown as Record<string, CityServiceContentRecord>),
+  ...(caCitiesContent5 as unknown as Record<string, CityServiceContentRecord>),
+  ...(flCitiesContent1 as unknown as Record<string, CityServiceContentRecord>),
+  ...(flCitiesContent2 as unknown as Record<string, CityServiceContentRecord>),
 };
 
 export function getCityServiceContent(

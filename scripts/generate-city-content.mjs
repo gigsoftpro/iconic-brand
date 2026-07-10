@@ -1618,6 +1618,108 @@ function validateRecord(record, profile) {
   return errors;
 }
 
+// --- Output splitting (keep any one file under ~50MB) -----------------------
+// Large states (TX, and CA/FL to come) serialize to well over 50MB as one
+// file, which is unwieldy to load/diff/review. Target a safety margin under
+// the 50MB cap since packing decisions below are an estimate (each city's
+// stand-alone serialized size, not the exact combined-file size).
+const MAX_OUTPUT_BYTES = 45 * 1024 * 1024;
+// Measured with the same `null, 2` pretty-printing used for the actual
+// write — compact JSON.stringify() understates the real file size by ~20%.
+function byteSize(obj) { return Buffer.byteLength(JSON.stringify(obj, null, 2), 'utf8'); }
+
+// Group records by city slug (the part of the compound key after the last
+// `::`) so a split never divides one city's records across two files.
+function groupByCity(records) {
+  const byCity = new Map();
+  for (const [key, rec] of Object.entries(records)) {
+    const slug = key.slice(key.lastIndexOf('::') + 2);
+    if (!byCity.has(slug)) byCity.set(slug, {});
+    byCity.get(slug)[key] = rec;
+  }
+  return byCity;
+}
+
+// Merge whatever previously-generated output exists for this base path,
+// whether it's a single `<base>.json` file or split `<base>-part<N>.json`
+// files (used to support --preserve-existing across a state that has since
+// been split, or vice versa).
+async function loadExistingOutput(outputPath) {
+  const dir = path.dirname(outputPath);
+  const base = path.basename(outputPath, '.json');
+  const merged = { ...(await loadExisting(outputPath)) };
+  let entries = [];
+  try { entries = await fs.readdir(dir); } catch { entries = []; }
+  const partRe = new RegExp(`^${base}-part\\d+\\.json$`);
+  for (const name of entries.filter((n) => partRe.test(n))) {
+    Object.assign(merged, await loadExisting(path.join(dir, name)));
+  }
+  return merged;
+}
+
+// Remove stale single/part output files this write doesn't replace — e.g. a
+// state that used to fit in one file but now needs splitting, or a part
+// count that shrank.
+async function cleanupStaleOutputs(outputPath, keptPaths) {
+  const dir = path.dirname(outputPath);
+  const base = path.basename(outputPath, '.json');
+  let entries = [];
+  try { entries = await fs.readdir(dir); } catch { entries = []; }
+  const singleRe = new RegExp(`^${base}\\.json$`);
+  const partRe = new RegExp(`^${base}-part\\d+\\.json$`);
+  for (const name of entries) {
+    if (!singleRe.test(name) && !partRe.test(name)) continue;
+    const full = path.join(dir, name);
+    if (!keptPaths.has(full)) await fs.unlink(full).catch(() => {});
+  }
+}
+
+// Write `results` to outputPath as one file, or split by city into
+// `<base>-part<N>.json` files if it would exceed MAX_OUTPUT_BYTES.
+async function writeOutput(outputPath, results) {
+  const dir = path.dirname(outputPath);
+  const base = path.basename(outputPath, '.json');
+
+  if (byteSize(results) <= MAX_OUTPUT_BYTES) {
+    const tmp = `${outputPath}.tmp`;
+    await fs.writeFile(tmp, `${JSON.stringify(results, null, 2)}\n`);
+    await fs.rename(tmp, outputPath);
+    await cleanupStaleOutputs(outputPath, new Set([outputPath]));
+    console.log(`Done. Wrote ${Object.keys(results).length} records to ${outputPath}`);
+    return;
+  }
+
+  const byCity = groupByCity(results);
+  const parts = [];
+  let current = {};
+  let currentSize = 2; // "{}"
+  for (const [, cityRecords] of byCity) {
+    const citySize = byteSize(cityRecords);
+    if (currentSize > 2 && currentSize + citySize > MAX_OUTPUT_BYTES) {
+      parts.push(current);
+      current = {};
+      currentSize = 2;
+    }
+    Object.assign(current, cityRecords);
+    currentSize += citySize;
+  }
+  if (Object.keys(current).length) parts.push(current);
+
+  const writtenPaths = new Set();
+  let total = 0;
+  for (let i = 0; i < parts.length; i++) {
+    const partPath = path.join(dir, `${base}-part${i + 1}.json`);
+    const tmp = `${partPath}.tmp`;
+    await fs.writeFile(tmp, `${JSON.stringify(parts[i], null, 2)}\n`);
+    await fs.rename(tmp, partPath);
+    writtenPaths.add(partPath);
+    total += Object.keys(parts[i]).length;
+    console.log(`  Wrote ${Object.keys(parts[i]).length} records to ${partPath} (${(byteSize(parts[i]) / 1024 / 1024).toFixed(1)}MB)`);
+  }
+  await cleanupStaleOutputs(outputPath, writtenPaths);
+  console.log(`Done. Wrote ${total} records across ${parts.length} part files (single file would exceed the 50MB cap).`);
+}
+
 // --- Main -------------------------------------------------------------------
 async function main() {
   const dryRun = hasArg('dry-run');
@@ -1635,7 +1737,7 @@ async function main() {
   const services = await loadServices();
   const outName = citySlug ? `${citySlug}.json` : `${(stateCode || 'cities').toLowerCase()}-cities.json`;
   const outputPath = path.resolve(rootDir, getArgValue('output') ?? `json/${outName}`);
-  const existing = await loadExisting(outputPath);
+  const existing = hasArg('no-preserve-existing') ? {} : await loadExistingOutput(outputPath);
   const results = { ...existing };
   const errors = [];
 
@@ -1657,10 +1759,7 @@ async function main() {
     return;
   }
 
-  const tmp = `${outputPath}.tmp`;
-  await fs.writeFile(tmp, `${JSON.stringify(results, null, 2)}\n`);
-  await fs.rename(tmp, outputPath);
-  console.log(`Done. Wrote ${Object.keys(results).length} records to ${outputPath}`);
+  await writeOutput(outputPath, results);
 }
 
 main().catch((e) => { console.error(e); process.exitCode = 1; });

@@ -15,7 +15,9 @@ other city, one state at a time.
   economy + service angle so every section does a different job and content is
   unique per city and per service. **Birmingham is always skipped** (it has
   hand-tuned content in `json/birminghamcontentex.json`).
-- **`json/<state>-cities.json`** — generated output, one file per state.
+- **`json/<state>-cities.json`** — generated output, one file per state, **or**
+  `json/<state>-cities-part<N>.json` if the state's output would exceed 50MB
+  (see "Output splitting" below).
 - **`lib/city-service-content.ts`** — merges every city JSON into one lookup.
 
 ## Generate a state
@@ -42,12 +44,47 @@ Output goes to `json/al-cities.json` (or `json/<slug>.json` for `--city`).
    employers and industries; actual suburbs and highway corridors; a one-line
    `economyLine` and `buyerCulture`; a descriptive `tierLabel`; metro-level
    `marketData`). Distinct local data is what makes each city's pages unique.
-3. **Generate:** `npm run generate:city-content -- --state=<CODE>`
-4. **Wire the loader:** in `lib/city-service-content.ts`, add
-   `import xxCitiesContent from '@/json/<state>-cities.json';` and spread it into
-   `cityServiceContentByKey`.
+3. **Generate:** `npm run generate:city-content -- --state=<CODE>`. Watch the
+   output — if the state is large it auto-splits (see below); note whether you
+   got `json/<state>-cities.json` or `json/<state>-cities-part1.json`,
+   `-part2.json`, etc.
+4. **Wire the loader:** in `lib/city-service-content.ts`, add one
+   `const xxCitiesContent = require('../json/<state>-cities.json');` (or one
+   `require()` per part file) and spread each into `cityServiceContentByKey`.
+   Use `require()`, not `import` — see "Why require() instead of import" below.
 5. **Verify:** `npx tsc --noEmit`; the generator's own validator already checks
    counts, "City, State" headings, no `undefined`, and no unrendered `{{token}}`.
+
+## Output splitting (50MB cap)
+
+`writeOutput()` in `generate-city-content.mjs` serializes the state's full
+result set and, if it would exceed `MAX_OUTPUT_BYTES` (45MB — a safety margin
+under the real 50MB requirement, since packing is estimated from each city's
+stand-alone serialized size, not the exact combined-file size), splits it by
+**city** into `<state>-cities-part1.json`, `-part2.json`, etc. — a city's
+123 records always stay together in one part. States under the cap still
+write a single `<state>-cities.json`, unchanged. `loadExistingOutput()` and
+`cleanupStaleOutputs()` handle the state transitioning between split and
+single-file across regenerations (deletes whichever form isn't being written
+this run). Sizing gotcha already hit once: `byteSize()` must measure with the
+same `JSON.stringify(obj, null, 2)` pretty-printing used for the actual
+write — measuring compact JSON understated real file size by ~20% and let a
+"split" file land at 53.8MB, over the cap.
+
+## Why `require()` instead of `import` for city JSON
+
+Because `resolveJsonModule` makes TypeScript infer a full literal type for
+every record in every `*-cities.json` import, statically `import`-ing the
+whole dataset eventually exceeds the type checker's default heap (confirmed:
+a wildcard ambient `declare module '@/json/*-cities.json'` override does
+*not* help — TS prefers the real file's inferred literal type over an
+ambient declaration once the file actually resolves on disk). The per-state
+files in `lib/city-service-content.ts` are loaded with
+`createRequire(import.meta.url)` + `require(...)` instead of `import`, so
+each one types as `any` and is narrowed only by the existing
+`as unknown as Record<string, CityServiceContentRecord>` cast — this keeps
+`tsc --noEmit` fast (~13s) regardless of how many states get added.
+Birmingham's file is small enough to stay a normal typed `import`.
 
 ## Profile schema (every field is used)
 
@@ -129,12 +166,27 @@ a short 3-variant location tag (city/region/county), not a metric, so its
 
 ## Status
 
-**232 cities across 42 states have unique, generated content** (28,536 records
-total — 123 services × 232 cities, plus Birmingham's 123 hand-tuned records).
-Zero cross-section duplication (verified with an abbreviation-aware sentence
-splitter — "St. Louis"/"St. Paul"/etc. false splits do not indicate real
-duplicates), zero `undefined`/unrendered tokens, zero key collisions,
-`tsc --noEmit` clean.
+**345 cities across 44 states + DC have unique, generated content**
+(42,312 generated records — 123 services × 344 generated cities — plus
+Birmingham's 123 hand-tuned records = 42,435 total). **All top-350-by-population
+states are now covered.** Zero cross-section duplication (verified with an
+abbreviation-aware sentence splitter — "St. Louis"/"St. Paul"/etc. false
+splits do not indicate real duplicates), zero `undefined`/unrendered tokens,
+zero key collisions, no file over 50MB, `tsc --noEmit` clean (~13s).
+
+Latest full-dataset duplication audit (after archetype system + case-study
+metrics + CA/FL):
+
+| Field | Unique | Top duplicate |
+|---|---|---|
+| `hero.subtext` | 42,247 / 42,312 (99.8%) | 3 |
+| `caseStudy.result` | 20,973 / 42,312 (49.6%) | 26 |
+| `caseStudy.description` | 42,279 / 42,312 (99.9%) | 2 |
+| `definition.definition` | 37,268 / 42,312 (88.1%) | 8 |
+| `marketAnalysis.body40Words` | 33,171 / 42,312 (78.4%) | 87 |
+| `differentiation.differentIntro` | 22,451 / 42,312 (53.0%) | 42 |
+| `valuePillars.money` | 24,866 / 42,312 (58.8%) | 60 |
+| `tldr` | 42,284 / 42,312 (99.9%) | 2 |
 
 Standalone-label fields (`marketAnalysis.snapshot.marketRegion`/
 `marketClassification`, `caseStudy.badge`, `expertQuote.title`) run their
@@ -144,19 +196,6 @@ naturally mid-sentence (e.g. `'the Permian Basin'`, `'the Municipality of
 Anchorage'`) — `ucFirst()` capitalizes only the handful of call sites where
 the same string is shown as a standalone label instead of inline text.
 
-Because `resolveJsonModule` makes TypeScript infer a full literal type for
-every record in every `*-cities.json` import, statically `import`-ing the
-whole dataset eventually exceeds the type checker's default heap (confirmed:
-a wildcard ambient `declare module '@/json/*-cities.json'` override does
-*not* help — TS prefers the real file's inferred literal type over an
-ambient declaration once the file actually resolves on disk). The per-state
-files in `lib/city-service-content.ts` are loaded with
-`createRequire(import.meta.url)` + `require(...)` instead of `import`, so
-each one types as `any` and is narrowed only by the existing
-`as unknown as Record<string, CityServiceContentRecord>` cast — this keeps
-`tsc --noEmit` fast (~13s) regardless of how many states get added.
-Birmingham's file is small enough to stay a normal typed `import`.
-
 | State | File | Cities |
 |---|---|---|
 | Alabama (hand-tuned hero city) | `birminghamcontentex.json` | Birmingham |
@@ -164,9 +203,11 @@ Birmingham's file is small enough to stay a normal typed `import`.
 | Alaska | `ak-cities.json` | Anchorage |
 | Arizona | `az-cities.json` | Phoenix, Tucson, Mesa, Chandler, Scottsdale, Glendale, Gilbert, Tempe, Peoria, Surprise, Goodyear, Buckeye |
 | Arkansas | `ar-cities.json` | Little Rock |
+| California | `ca-cities-part1..5.json` (5 parts, ~45MB each) | Los Angeles, Long Beach, Anaheim, Santa Ana, Irvine, Glendale, Huntington Beach, Santa Clarita, Palmdale, Pomona, Torrance, Fullerton, West Covina (+ slug `pomona-ca-1` duplicate), Costa Mesa, Downey, Inglewood, El Monte, Simi Valley, Thousand Oaks, Mission Viejo, Riverside, San Bernardino, Fontana, Moreno Valley, Ontario, Corona, Victorville, Jurupa Valley, Rialto, Murrieta, Menifee, Temecula, Hesperia, Hemet, Apple Valley, Chino, Upland, San Diego, Chula Vista, Oceanside, Carlsbad, Escondido, El Cajon, Vista, La Mesa, San Marcos, San Jose, San Francisco, Oakland, Fremont, Hayward, Sunnyvale, Concord, Berkeley, Antioch, San Leandro, Daly City, Santa Clara, Redwood City, San Ramon, Sacramento, Elk Grove, Roseville, Fresno, Bakersfield, Stockton, Modesto, Visalia, Salinas, Chico, Redding, Santa Rosa, Vallejo, Vacaville, Santa Maria, Santa Barbara, Ventura, Pasadena (79 cities) |
 | Colorado | `co-cities.json` | Denver, Colorado Springs, Aurora, Fort Collins, Lakewood, Thornton, Arvada, Pueblo, Centennial, Boulder, Westminster, Longmont |
 | Connecticut | `ct-cities.json` | Bridgeport, Hartford, New Haven, Stamford, Waterbury, Norwalk |
 | District of Columbia | `dc-cities.json` | Washington |
+| Florida | `fl-cities-part1..2.json` (2 parts, ~45MB/~30MB) | Miami, Hialeah, Fort Lauderdale, Pembroke Pines, Miramar, Hollywood, Coral Springs, Pompano Beach, West Palm Beach, Davie, Sunrise, Plantation, Boca Raton, Delray Beach, Boynton Beach, Homestead, Tampa, St. Petersburg, Clearwater, Brandon, Largo, Orlando, Sanford, Jacksonville, Tallahassee, Cape Coral, Port St. Lucie, Lakeland, Gainesville, Palm Bay, Deltona, Palm Coast, Pensacola (33 cities) |
 | Georgia | `ga-cities.json` | Atlanta, Augusta, Savannah, Macon, Athens, Sandy Springs |
 | Hawaii | `hi-cities.json` | Honolulu |
 | Idaho | `id-cities.json` | Boise, Meridian, Nampa |
@@ -197,12 +238,13 @@ Birmingham's file is small enough to stay a normal typed `import`.
 | South Carolina | `sc-cities.json` | Columbia, Charleston |
 | South Dakota | `sd-cities.json` | Sioux Falls, Rapid City |
 | Tennessee | `tn-cities.json` | Nashville, Memphis, Knoxville, Chattanooga, Clarksville, Murfreesboro |
-| Texas | `tx-cities.json` | Houston, San Antonio, Dallas, Austin, Fort Worth, El Paso, Arlington, Corpus Christi, Plano, Laredo, Lubbock, Irving, Garland, Frisco, McKinney, Amarillo, Grand Prairie, Brownsville, Killeen, Denton, Mesquite, McAllen, Waco, Carrollton, Round Rock, Pearland, Odessa, Midland, Wichita Falls, Abilene, League City, Allen, Tyler, Pasadena, Conroe, Mission, Edinburg, Lewisville, Sugar Land (slug `lewisville-tx-1`, an upstream duplicate-slug workaround), College Station |
+| Texas | `tx-cities-part1..2.json` (2 parts, ~45MB each) | Houston, San Antonio, Dallas, Austin, Fort Worth, El Paso, Arlington, Corpus Christi, Plano, Laredo, Lubbock, Irving, Garland, Frisco, McKinney, Amarillo, Grand Prairie, Brownsville, Killeen, Denton, Mesquite, McAllen, Waco, Carrollton, Round Rock, Pearland, Odessa, Midland, Wichita Falls, Abilene, League City, Allen, Tyler, Pasadena, Conroe, Mission, Edinburg, Lewisville, Sugar Land (slug `lewisville-tx-1`, an upstream duplicate-slug workaround), College Station |
 | Utah | `ut-cities.json` | Salt Lake City, West Valley City, Provo, West Jordan |
 | Virginia | `va-cities.json` | Virginia Beach, Norfolk, Chesapeake, Richmond, Alexandria, Portsmouth |
 | Washington | `wa-cities.json` | Seattle, Spokane, Tacoma, Vancouver, Bellevue, Kent, Renton, Spokane Valley, Federal Way, Bellingham |
 | Wisconsin | `wi-cities.json` | Milwaukee, Madison, Green Bay, Racine, Kenosha |
 
-**Not yet done** (remaining top-350 states): CA, FL. These are the two
-largest states left (~33–79 cities each) — add profiles a state (or a batch)
-at a time following the workflow above.
+**All top-350-by-population states are covered.** Further expansion would mean
+going beyond the top-350 list (smaller cities within already-covered states,
+or additional US territories) — not required by the current scope, but the
+same profile → generate → wire → verify workflow above applies unchanged.
