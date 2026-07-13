@@ -44,7 +44,7 @@ export async function generateMetadata({
     return { title: 'Page Not Found' };
   }
 
-  const cityServiceContent = getCityServiceContent(keyword, location);
+  const cityServiceContent = await getCityServiceContent(keyword, location);
 
   const title = keywordData.metaTitle
     .replace('{city}', locationData.city)
@@ -177,7 +177,7 @@ export default async function KeywordLocationPage({
     notFound();
   }
 
-  const cityServiceContent = getCityServiceContent(keyword, location);
+  const cityServiceContent = await getCityServiceContent(keyword, location);
   const nearbyLocations = getNearbyLocations(location, 6);
   const h1 = keywordData.h1Template
     .replace('{city}', locationData.city)

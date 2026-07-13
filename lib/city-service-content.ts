@@ -1,66 +1,5 @@
-import { createRequire } from 'node:module';
-import birminghamContent from '@/json/birminghamcontentex.json';
-
-// Additional cities, generated per state by scripts/generate-city-content.mjs.
-// Loaded with require() (not `import`) so TypeScript treats each file as
-// `any` instead of inferring a full literal type for every record — with
-// 230+ cities x 123 services, resolveJsonModule literal inference across
-// all of these at once exceeds the type checker's default heap. Add one
-// require() + spread per state as new states are generated.
-const require = createRequire(import.meta.url);
-const alCitiesContent = require('../json/al-cities.json');
-const akCitiesContent = require('../json/ak-cities.json');
-const arCitiesContent = require('../json/ar-cities.json');
-const dcCitiesContent = require('../json/dc-cities.json');
-const hiCitiesContent = require('../json/hi-cities.json');
-const mdCitiesContent = require('../json/md-cities.json');
-const mtCitiesContent = require('../json/mt-cities.json');
-const ndCitiesContent = require('../json/nd-cities.json');
-const riCitiesContent = require('../json/ri-cities.json');
-const sdCitiesContent = require('../json/sd-cities.json');
-const scCitiesContent = require('../json/sc-cities.json');
-const neCitiesContent = require('../json/ne-cities.json');
-const kyCitiesContent = require('../json/ky-cities.json');
-const idCitiesContent = require('../json/id-cities.json');
-const iaCitiesContent = require('../json/ia-cities.json');
-const paCitiesContent = require('../json/pa-cities.json');
-const utCitiesContent = require('../json/ut-cities.json');
-const okCitiesContent = require('../json/ok-cities.json');
-const nmCitiesContent = require('../json/nm-cities.json');
-const laCitiesContent = require('../json/la-cities.json');
-const nyCitiesContent = require('../json/ny-cities.json');
-const ctCitiesContent = require('../json/ct-cities.json');
-const wiCitiesContent = require('../json/wi-cities.json');
-const orCitiesContent = require('../json/or-cities.json');
-const nvCitiesContent = require('../json/nv-cities.json');
-const ksCitiesContent = require('../json/ks-cities.json');
-const moCitiesContent = require('../json/mo-cities.json');
-const mnCitiesContent = require('../json/mn-cities.json');
-const gaCitiesContent = require('../json/ga-cities.json');
-const inCitiesContent = require('../json/in-cities.json');
-const ilCitiesContent = require('../json/il-cities.json');
-const ohCitiesContent = require('../json/oh-cities.json');
-const njCitiesContent = require('../json/nj-cities.json');
-const maCitiesContent = require('../json/ma-cities.json');
-const vaCitiesContent = require('../json/va-cities.json');
-const tnCitiesContent = require('../json/tn-cities.json');
-const coCitiesContent = require('../json/co-cities.json');
-const azCitiesContent = require('../json/az-cities.json');
-const waCitiesContent = require('../json/wa-cities.json');
-const ncCitiesContent = require('../json/nc-cities.json');
-const miCitiesContent = require('../json/mi-cities.json');
-// TX exceeds the 50MB single-file cap (scripts/generate-city-content.mjs
-// splits by city into `<state>-cities-part<N>.json`); as more large states
-// are added, add one require() per part here.
-const txCitiesContent1 = require('../json/tx-cities-part1.json');
-const txCitiesContent2 = require('../json/tx-cities-part2.json');
-const caCitiesContent1 = require('../json/ca-cities-part1.json');
-const caCitiesContent2 = require('../json/ca-cities-part2.json');
-const caCitiesContent3 = require('../json/ca-cities-part3.json');
-const caCitiesContent4 = require('../json/ca-cities-part4.json');
-const caCitiesContent5 = require('../json/ca-cities-part5.json');
-const flCitiesContent1 = require('../json/fl-cities-part1.json');
-const flCitiesContent2 = require('../json/fl-cities-part2.json');
+import { cache } from 'react';
+import { sql, initDb } from '@/lib/db';
 
 export interface CityServiceContent {
   key: string;
@@ -194,75 +133,36 @@ type CityServiceContentRecord = Omit<CityServiceContent, 'key'> & {
   key?: string;
 };
 
-// Merge every city's generated content into one compound-key lookup.
-// Birmingham is hand-tuned; other cities are generated per state.
-const cityServiceContentByKey = {
-  ...(birminghamContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(alCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(akCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(arCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(dcCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(hiCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(mdCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(mtCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(ndCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(riCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(sdCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(scCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(neCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(kyCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(idCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(iaCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(paCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(utCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(okCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(nmCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(laCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(nyCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(ctCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(wiCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(orCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(nvCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(ksCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(moCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(mnCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(gaCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(inCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(ilCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(ohCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(njCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(maCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(vaCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(tnCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(coCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(azCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(waCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(ncCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(miCitiesContent as unknown as Record<string, CityServiceContentRecord>),
-  ...(txCitiesContent1 as unknown as Record<string, CityServiceContentRecord>),
-  ...(txCitiesContent2 as unknown as Record<string, CityServiceContentRecord>),
-  ...(caCitiesContent1 as unknown as Record<string, CityServiceContentRecord>),
-  ...(caCitiesContent2 as unknown as Record<string, CityServiceContentRecord>),
-  ...(caCitiesContent3 as unknown as Record<string, CityServiceContentRecord>),
-  ...(caCitiesContent4 as unknown as Record<string, CityServiceContentRecord>),
-  ...(caCitiesContent5 as unknown as Record<string, CityServiceContentRecord>),
-  ...(flCitiesContent1 as unknown as Record<string, CityServiceContentRecord>),
-  ...(flCitiesContent2 as unknown as Record<string, CityServiceContentRecord>),
-};
-
-export function getCityServiceContent(
+// City-service content lives in Postgres (table `city_service_content`,
+// synced from json/ by scripts/migrate-content-to-db.mjs and
+// scripts/generate-city-content.mjs --sync-db) rather than bundled JSON —
+// at 42,000+ records / 800MB+, require()-ing every state's JSON into one
+// merged object made the Vercel production build hang while bundling/tracing
+// the module graph. Wrapped in React's cache() so the two call sites in
+// app/[keyword]/[location]/page.tsx (generateMetadata + the page body) share
+// one DB round trip per render instead of querying twice.
+export const getCityServiceContent = cache(async (
   serviceSlug: string,
   citySlug: string
-): CityServiceContent | undefined {
+): Promise<CityServiceContent | undefined> => {
   const key = `${serviceSlug}::${citySlug}`;
-  const content = cityServiceContentByKey[key];
-
-  if (!content) {
+  try {
+    await initDb();
+    const rows = await sql`
+      SELECT content FROM city_service_content
+      WHERE service_slug = ${serviceSlug} AND city_slug = ${citySlug}
+      LIMIT 1
+    `;
+    if (rows.length === 0) {
+      return undefined;
+    }
+    const content = rows[0].content as CityServiceContentRecord;
+    return {
+      ...content,
+      key: content.key ?? key,
+    };
+  } catch (err) {
+    console.error(`getCityServiceContent(${key}) failed:`, err);
     return undefined;
   }
-
-  return {
-    ...content,
-    key: content.key ?? key,
-  };
-}
+});

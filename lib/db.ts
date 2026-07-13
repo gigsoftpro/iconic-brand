@@ -8,8 +8,13 @@ export function getSQL() {
   return _sql
 }
 
-// Keep backward-compatible export for existing code
-export const sql = new Proxy({} as NeonQueryFunction<false, false>, {
+// Keep backward-compatible export for existing code.
+// The Proxy target must itself be callable — a Proxy is only callable if its
+// target has a [[Call]] internal method, regardless of whether an `apply`
+// trap is defined. A `{}` target here makes `sql` throw "sql is not a
+// function" on every tagged-template call (`sql\`SELECT ...\``), which is
+// the sql export's entire purpose.
+export const sql = new Proxy(function sql() {} as unknown as NeonQueryFunction<false, false>, {
   apply(_target, _thisArg, args) {
     return getSQL()(...(args as [TemplateStringsArray, ...unknown[]]))
   },
@@ -47,6 +52,15 @@ export async function initDb() {
       nudge3_sent_at TIMESTAMPTZ,
       created_at TIMESTAMPTZ DEFAULT NOW(),
       updated_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `
+  await sql`
+    CREATE TABLE IF NOT EXISTS city_service_content (
+      service_slug TEXT NOT NULL,
+      city_slug TEXT NOT NULL,
+      content JSONB NOT NULL,
+      updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+      PRIMARY KEY (service_slug, city_slug)
     )
   `
   initialized = true

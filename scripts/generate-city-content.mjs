@@ -1,7 +1,9 @@
+import 'dotenv/config';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CITY_PROFILES, CITIES_BY_STATE } from './city-profiles.mjs';
+import { syncRecordsToDb } from './lib/sync-db.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -1760,6 +1762,12 @@ async function main() {
   }
 
   await writeOutput(outputPath, results);
+
+  if (hasArg('sync-db')) {
+    const label = citySlug ? `[${citySlug}] ` : `[${stateCode}] `;
+    await syncRecordsToDb(results, { label });
+    console.log(`Synced ${Object.keys(results).length} records to Postgres.`);
+  }
 }
 
 main().catch((e) => { console.error(e); process.exitCode = 1; });
