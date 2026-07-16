@@ -5,7 +5,8 @@ import Image from 'next/image';
 import {
   FaCheckCircle, FaMapMarkerAlt, FaPhone, FaEnvelope,
   FaChartBar, FaChartLine, FaBolt, FaExclamationTriangle,
-  FaArrowRight, FaChevronDown, FaCircle
+  FaArrowRight, FaChevronDown, FaCircle,
+  FaBuilding, FaLandmark, FaHandshake
 } from 'react-icons/fa';
 import { allFranchiseKeywords, getKeywordBySlug, isStartupKeyword } from '@/lib/franchise-keywords';
 import { getLocationBySlug, getNearbyLocations } from '@/lib/target-locations';
@@ -13,10 +14,12 @@ import { getCityContext, getCityFAQs, getCategoryServices } from '@/lib/city-con
 import { getMarketData, getExpertQuote, getServiceDefinition, getIndustryMistakes, getTestimonial, getCitationsForPage } from '@/lib/geo-content';
 import { getHeroImage } from '@/lib/hero-images';
 import { getCityServiceContent } from '@/lib/city-service-content';
+import { getCityResourceLinks, SBA_LINKS } from '@/lib/city-resource-links';
 import TrustedBy from '@/components/TrustedBy';
 import WhyIBGIsDifferent from '@/components/WhyIBGIsDifferent';
 import IBGCarousel from '@/components/IBGCarousel';
 import WhyChooseUs from '@/components/WhyChooseUs';
+import ResourceLinkCard from '@/components/ResourceLinkCard';
 
 // ISR Configuration: Generate pages on-demand and revalidate every 7 days
 export const revalidate = 604800; // 7 days in seconds
@@ -179,6 +182,7 @@ export default async function KeywordLocationPage({
 
   const cityServiceContent = await getCityServiceContent(keyword, location);
   const nearbyLocations = getNearbyLocations(location, 6);
+  const cityResourceLinks = getCityResourceLinks(location);
   const h1 = keywordData.h1Template
     .replace('{city}', locationData.city)
     .replace('{stateCode}', locationData.stateCode)
@@ -1073,6 +1077,49 @@ export default async function KeywordLocationPage({
       </section>
 
       {/* <TransformCTA /> */}
+
+      {/* Local Business Resources + City Map */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+              Local Business Resources in {locationData.city}, {locationData.stateCode}
+            </h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              Official links and guides for businesses operating in {locationData.city}.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+            {typeof locationData.latitude === 'number' && typeof locationData.longitude === 'number' && (
+              <div className="rounded-2xl overflow-hidden shadow-lg border border-gray-200 h-80 lg:h-full min-h-[320px]">
+                <iframe
+                  title={`Map of ${locationData.city}, ${locationData.stateCode}`}
+                  src={`https://maps.google.com/maps?q=${locationData.latitude},${locationData.longitude}&z=12&output=embed`}
+                  width="100%"
+                  height="100%"
+                  style={{ border: 0 }}
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                />
+              </div>
+            )}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {cityResourceLinks?.chamberUrl && (
+                <ResourceLinkCard label="Chamber of Commerce" url={cityResourceLinks.chamberUrl} icon={FaBuilding} />
+              )}
+              {cityResourceLinks?.citySiteUrl && (
+                <ResourceLinkCard label="City / County Government" url={cityResourceLinks.citySiteUrl} icon={FaLandmark} />
+              )}
+              {cityResourceLinks?.stateCommerceUrl && (
+                <ResourceLinkCard label={`${locationData.state} Dept. of Commerce`} url={cityResourceLinks.stateCommerceUrl} icon={FaChartLine} />
+              )}
+              {SBA_LINKS.map((l) => (
+                <ResourceLinkCard key={l.url} label={l.label} url={l.url} icon={FaHandshake} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* Sources & References (GEO: data credibility + citation-worthy) */}
       <section className="py-12 bg-gray-50 border-t border-gray-200">
