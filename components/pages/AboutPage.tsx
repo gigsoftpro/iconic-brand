@@ -351,7 +351,7 @@ export default function AboutPage() {
                 <div className="p-6">
                   <p className="text-gray-600 leading-relaxed text-sm">
                     {member.bio}
-                    {member.link && (
+                    {/* {member.link && (
                       <>
                         {" "}
                         <a
@@ -363,7 +363,7 @@ export default function AboutPage() {
                           {member.link.label}
                         </a>
                       </>
-                    )}
+                    )} */}
                   </p>
                 </div>
               </div>
