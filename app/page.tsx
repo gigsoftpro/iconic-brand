@@ -90,12 +90,15 @@ export default function Home() {
           <HeroComponent />
           <TrustedBy />
           <WhyIBGIsDifferent />
+          <IBGCarousel />
           <ServicesOverview />
           <ConsultingServices />
-          <MarketingServices />
+          <MarketingServices /> 
           <ProcessSection />
-          <IBGCarousel />
-          <WhyChooseUs />
+
+          
+
+          <WhyChooseUs /> 
           {/* <Stats /> */}
           <Testimonials />
 

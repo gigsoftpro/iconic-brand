@@ -120,7 +120,7 @@ export default function IBGCarousel() {
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
 
   return (
-    <section className="py-20 px-6 bg-black relative overflow-hidden">
+    <section className="py-20 px-6 bg-white relative overflow-hidden">
       {/* Top border accent */}
       <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#D5AF34]/40 to-transparent"></div>
       <div className="absolute bottom-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-[#D5AF34]/40 to-transparent"></div>
@@ -128,15 +128,15 @@ export default function IBGCarousel() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-6 py-3 mb-6">
-            <svg className="w-4 h-4 text-[#D5AF34]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="inline-flex items-center gap-2 bg-linear-to-r from-[#D5AF34]/10 to-[#C19A2E]/10 border border-[#D5AF34]/25 rounded-full px-6 py-3 mb-6">
+            <svg className="w-4 h-4 text-[#C19A2E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
             </svg>
-            <span className="bg-linear-to-r from-[#D5AF34] to-[#C19A2E] text-transparent bg-clip-text font-bold text-sm tracking-widest uppercase">
+            <span className="text-[#C19A2E] font-bold text-sm tracking-widest uppercase">
               Our Work
             </span>
           </div>
-          <h2 className="text-4xl lg:text-5xl font-black text-white leading-tight">
+          <h2 className="text-4xl lg:text-5xl font-black text-black leading-tight">
             JOIN THE{" "}
             <span className="bg-linear-to-r from-[#D5AF34] via-[#FFD700] to-[#5F9EA0] text-transparent bg-clip-text">
               ICONIC BRAND GROUP FAMILY!

@@ -293,7 +293,7 @@ export function getContextualLinks(currentPath: string, count: number = 8): Inte
       ...availableLinks.filter(link => link.category === 'blog').slice(0, 2),
       ...availableLinks.filter(link => link.category === 'contact'),
     ];
-  } else if (currentPath.includes('/services')) {
+  } else if (currentPath.includes('/servicesss')) {
     // On service hub, prioritize individual services + industries
     prioritizedLinks = [
       ...availableLinks.filter(link => link.category === 'service').slice(0, 4),
