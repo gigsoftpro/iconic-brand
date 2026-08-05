@@ -538,7 +538,7 @@ export default async function KeywordLocationPage({
   };
 
   const heroImage = getHeroImage(`${keyword}-${location}`);
-  const videoSrc = "https://www.youtube.com/embed/f_n0oT1FeMk?autoplay=1&mute=1&loop=1&playlist=f_n0oT1FeMk&controls=0&rel=0&playsinline=1";
+  const videoSrc = "https://www.youtube.com/embed/Q-PWuHqt6PI?autoplay=1&mute=1&loop=1&playlist=Q-PWuHqt6PI&controls=0&rel=0&playsinline=1";
 
   return (
     <>

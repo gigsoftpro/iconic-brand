@@ -32,7 +32,6 @@ export default function HeroLight() {
           - Desktop (>= lg): 2 columns. Left: Header + CTA Buttons. Right: Video.
         */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-x-16 lg:gap-y-8 items-center">
-          
           {/* Block 1: Header (Badge, Headline, Paragraph) */}
           <div className="space-y-6 text-center lg:text-left lg:col-start-1 lg:row-start-1">
             {/* Tag Badge */}
@@ -86,10 +85,11 @@ export default function HeroLight() {
             {/* Paragraph Text */}
             <p className="text-base sm:text-lg lg:text-xl text-gray-700 leading-relaxed max-w-xl mx-auto lg:mx-0">
               Strategic consulting and innovative marketing solutions that
-              transform businesses into industry leaders. We don&apos;t just build
-              brands—
+              transform businesses into industry leaders. We don&apos;t just
+              build brands—
               <span className="text-[#D5AF34] font-bold">
-                {" "}we create legacies
+                {" "}
+                we create legacies
               </span>
               .
             </p>
@@ -103,7 +103,7 @@ export default function HeroLight() {
           <div className="w-full aspect-video sm:h-[350px] md:h-[400px] lg:h-[480px] max-h-[550px] rounded-2xl overflow-hidden shadow-2xl border border-gray-200/80 bg-black/5 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
             <iframe
               className="w-full h-full rounded-2xl object-cover"
-              src="https://www.youtube.com/embed/f_n0oT1FeMk?autoplay=1&mute=1&loop=1&playlist=f_n0oT1FeMk&controls=0&rel=0&playsinline=1"
+              src="https://www.youtube.com/embed/Q-PWuHqt6PI?autoplay=1&mute=1&loop=1&playlist=Q-PWuHqt6PI&controls=0&rel=0&playsinline=1"
               title="Background Video"
               frameBorder="0"
               allow="encrypted-media; picture-in-picture"
@@ -162,7 +162,6 @@ export default function HeroLight() {
               <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </Link>
           </div>
-
         </div>
       </div>
 
