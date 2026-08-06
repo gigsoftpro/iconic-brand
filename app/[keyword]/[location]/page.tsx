@@ -95,7 +95,8 @@ export async function generateMetadata({
     cityServiceContent?.hero.subtext ??
     `${keywordData.description} Serving ${locationData.city}, ${locationData.stateCode} and the ${locationData.market} area. Contact us for a free consultation.`;
 
-  const canonicalUrl = `http://localhost:3000/${keyword}/${location}`;
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.iconicbrandgroup.com";
+  const canonicalUrl = `${baseUrl}/${keyword}/${location}`;
 
   // MCP On-Page SEO: keywords should be contextually relevant, not stuffed
   const keywordsArray = [
