@@ -23,7 +23,7 @@ import {
   getKeywordBySlug,
   isStartupKeyword,
 } from "@/lib/franchise-keywords";
-import { getLocationBySlug, getNearbyLocations } from "@/lib/target-locations";
+import { getLocationBySlug, getNearbyLocations, NOINDEXED_LOCATION_SLUGS } from "@/lib/target-locations";
 import {
   getCityContext,
   getCityFAQs,
@@ -127,13 +127,15 @@ export async function generateMetadata({
     alternates: {
       canonical: canonicalUrl,
     },
-    robots: {
-      index: true,
-      follow: true,
-      "max-snippet": -1,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
-    },
+    robots: NOINDEXED_LOCATION_SLUGS.has(location)
+      ? { index: false, follow: true }
+      : {
+          index: true,
+          follow: true,
+          "max-snippet": -1,
+          "max-image-preview": "large",
+          "max-video-preview": -1,
+        },
   };
 }
 
@@ -515,8 +517,13 @@ export default async function KeywordLocationPage({
     ],
   };
 
-  // FAQ data from city context (per MCP: unique per city + service, not just name swaps)
-  const faqs = getCityFAQs(
+  // FAQ data: prefer the DB-backed, per-city-per-service generated FAQs
+  // (cityServiceContent.faqs) — getCityFAQs() is city-only (no service
+  // parameter), so 2 of its 5 questions/answers are byte-for-byte identical
+  // across all 123 service pages for a given city, both in the visible FAQ
+  // section and in the FAQPage JSON-LD schema. Only fall back to it for
+  // combinations that genuinely have no DB row yet.
+  const faqs = cityServiceContent?.faqs ?? getCityFAQs(
     locationData.city,
     locationData.state,
     locationData.market,

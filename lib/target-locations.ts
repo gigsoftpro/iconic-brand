@@ -65,9 +65,31 @@ export const allTargetLocations: TargetLocation[] = [
   ...extendedFLNotInTop350.map(convertFLCityToTargetLocation)
 ];
 
+// Locations that aren't genuinely independent, searchable places — not a
+// real Census-recognized municipality/CDP, or (in the "Universal Orlando
+// Area" case) not a real place name at all, just a district/label inside a
+// larger city. Pages for these slugs still resolve (so any existing links
+// or bookmarks don't 404), but are excluded from the sitemap and marked
+// noindex in generateMetadata (see app/[keyword]/[location]/page.tsx) —
+// generating full location-specific service pages for a non-place was
+// flagged as a doorway-page/scaled-content risk during the 2026-08 SEO
+// deindexing investigation. See SEO-DEINDEXING-INCIDENT.md, section 7.
+export const NOINDEXED_LOCATION_SLUGS = new Set<string>([
+  'disney-springs-fl', // a shopping/dining district inside Bay Lake/Lake Buena Vista, not its own place
+  'universal-orlando-area-fl', // not a Census-recognized place or gazetteer entry at all
+]);
+
 // Get all location slugs for static generation
 export function getAllLocationSlugs(): string[] {
   return allTargetLocations.map(l => l.slug);
+}
+
+// Location slugs eligible for the sitemap and full indexing — excludes the
+// small denylist above.
+export function getIndexableLocationSlugs(): string[] {
+  return allTargetLocations
+    .map(l => l.slug)
+    .filter(slug => !NOINDEXED_LOCATION_SLUGS.has(slug));
 }
 
 // Get location by slug - checks both top 350 and extended FL

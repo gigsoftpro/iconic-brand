@@ -2,16 +2,22 @@
 // 10,000 URLs per sitemap, 0-indexed, /sitemaps/ path
 
 import { getAllKeywordSlugs, getKeywordBySlug } from './franchise-keywords';
-import { getAllLocationSlugs, allTargetLocations, getLocationsByState } from './target-locations';
+import { getIndexableLocationSlugs, allTargetLocations, getLocationsByState } from './target-locations';
 import { getAllBlogSlugs } from './blog-data';
 import { getAllIndustrySlugs } from './industry-data';
 import { getAllIndustryServiceSlugs } from './industry-service-combos';
 
-const BASE_URL = 'https://www.iconicbrandgroup.com';
+// Must match the domain used everywhere else (robots.ts, page metadata,
+// lib/seo.ts) — env-var-first so a domain change propagates consistently
+// instead of silently diverging from the rest of the site's canonical URLs.
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL || 'https://www.iconicbrandgroup.com';
 const URLS_PER_SITEMAP = 10000;
 
-// Stable build-time date — update when content actually changes
-const BUILD_DATE = new Date('2026-03-23T00:00:00Z');
+// Stable build-time date — update when content actually changes across the
+// site. Bumped 2026-08-10 to reflect the 2026-08-06 canonical-URL fix
+// (every /{keyword}/{location} page's <link rel="canonical"> changed that
+// day), which is a real, site-wide change worth signaling to crawlers.
+const BUILD_DATE = new Date('2026-08-06T00:00:00Z');
 const LASTMOD = BUILD_DATE.toISOString().split('T')[0];
 
 export interface SitemapUrl {
@@ -26,7 +32,7 @@ function getStaticPageCount(): number {
 }
 
 function getProgrammaticPageCount(): number {
-  return getAllKeywordSlugs().length * getAllLocationSlugs().length;
+  return getAllKeywordSlugs().length * getIndexableLocationSlugs().length;
 }
 
 function getIndustryServiceCityPageCount(): number {
@@ -66,8 +72,11 @@ function getUrlStringsForRange(globalStart: number, globalEnd: number): string[]
   if (results.length >= (globalEnd - globalStart)) return results;
 
   // --- Programmatic pages ---
+  // Excludes NOINDEXED_LOCATION_SLUGS (non-place/doorway locations, see
+  // lib/target-locations.ts) — a sitemap should never list a URL the page
+  // itself marks noindex.
   const keywords = getAllKeywordSlugs();
-  const locations = getAllLocationSlugs();
+  const locations = getIndexableLocationSlugs();
   const progCount = keywords.length * locations.length;
   const progEnd = offset + progCount;
   if (globalStart < progEnd && globalEnd > offset) {

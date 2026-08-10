@@ -1,5 +1,5 @@
 import { cache } from 'react';
-import { sql, initDb } from '@/lib/db';
+import { sql } from '@/lib/db';
 
 export interface CityServiceContent {
   key: string;
@@ -147,7 +147,14 @@ export const getCityServiceContent = cache(async (
 ): Promise<CityServiceContent | undefined> => {
   const key = `${serviceSlug}::${citySlug}`;
   try {
-    await initDb();
+    // No initDb() here on purpose: this is the highest-traffic read path on
+    // the site (52,890+ pages, hit by every visitor and every crawler pass).
+    // The table already exists in production; running two CREATE TABLE IF
+    // NOT EXISTS round trips before every content query on every cold
+    // serverless instance only adds latency/connection pressure for no
+    // benefit — schema setup belongs on write paths (lib/db.ts callers),
+    // not this reader. A missing table would still degrade gracefully via
+    // the catch block below, same as any other DB error.
     const rows = await sql`
       SELECT content FROM city_service_content
       WHERE service_slug = ${serviceSlug} AND city_slug = ${citySlug}
