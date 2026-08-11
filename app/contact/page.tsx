@@ -2,23 +2,29 @@ import ContactPage from "@/components/pages/ContactPage";
 import Breadcrumb from "@/components/Breadcrumb";
 import ContextualLinks from "@/components/ContextualLinks";
 import GovernmentResources from "@/components/GovernmentResources";
-import { generateMetadata as generateSEOMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import {
+  generateMetadata as generateSEOMetadata,
+  generateBreadcrumbSchema,
+} from "@/lib/seo";
+import IBGCarousel from "@/components/IBGCarousel";
 
 export const metadata = generateSEOMetadata({
   title: "Contact Iconic Brand Group | Free Business Consultation",
-  description: "Ready to transform your business? Contact Iconic Brand Group for a free consultation. Strategic consulting and marketing solutions for 500+ clients worldwide.",
+  description:
+    "Ready to transform your business? Contact Iconic Brand Group for a free consultation. Strategic consulting and marketing solutions for 500+ clients worldwide.",
   keywords: [
     "contact business consultant",
     "free business consultation",
     "strategic consulting contact",
     "marketing services contact",
     "business transformation consultation",
-    "iconic brand group contact"
+    "iconic brand group contact",
   ],
   canonical: "/contact",
   openGraph: {
     title: "Contact Iconic Brand Group | Free Business Consultation",
-    description: "Ready to transform your business? Get your free consultation today.",
+    description:
+      "Ready to transform your business? Get your free consultation today.",
     image: "/contact/contact-hero-og.jpg",
     type: "website",
   },
@@ -53,7 +59,7 @@ export default function Contact() {
         </div>
 
         <ContactPage />
-
+        <IBGCarousel />
         {/* Contextual Internal Links */}
         <ContextualLinks
           currentPath="/contact"

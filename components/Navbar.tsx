@@ -91,7 +91,7 @@ export default function Navbar() {
       href: "/industries",
     },
     {
-      label: "Blog",
+      label: "Media",
       href: "/blog",
     },
     // {

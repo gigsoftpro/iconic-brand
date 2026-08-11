@@ -18,12 +18,18 @@ import {
   FaLandmark,
   FaHandshake,
 } from "react-icons/fa";
+import { GoGoal } from "react-icons/go";
+import { HiOutlineCog8Tooth, HiOutlineRocketLaunch } from "react-icons/hi2";
 import {
   allFranchiseKeywords,
   getKeywordBySlug,
   isStartupKeyword,
 } from "@/lib/franchise-keywords";
-import { getLocationBySlug, getNearbyLocations, NOINDEXED_LOCATION_SLUGS } from "@/lib/target-locations";
+import {
+  getLocationBySlug,
+  getNearbyLocations,
+  NOINDEXED_LOCATION_SLUGS,
+} from "@/lib/target-locations";
 import {
   getCityContext,
   getCityFAQs,
@@ -95,7 +101,8 @@ export async function generateMetadata({
     cityServiceContent?.hero.subtext ??
     `${keywordData.description} Serving ${locationData.city}, ${locationData.stateCode} and the ${locationData.market} area. Contact us for a free consultation.`;
 
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://www.iconicbrandgroup.com";
+  const baseUrl =
+    process.env.NEXT_PUBLIC_BASE_URL || "https://www.iconicbrandgroup.com";
   const canonicalUrl = `${baseUrl}/${keyword}/${location}`;
 
   // MCP On-Page SEO: keywords should be contextually relevant, not stuffed
@@ -523,13 +530,15 @@ export default async function KeywordLocationPage({
   // across all 123 service pages for a given city, both in the visible FAQ
   // section and in the FAQPage JSON-LD schema. Only fall back to it for
   // combinations that genuinely have no DB row yet.
-  const faqs = cityServiceContent?.faqs ?? getCityFAQs(
-    locationData.city,
-    locationData.state,
-    locationData.market,
-    cityContext,
-    keywordData.title,
-  );
+  const faqs =
+    cityServiceContent?.faqs ??
+    getCityFAQs(
+      locationData.city,
+      locationData.state,
+      locationData.market,
+      cityContext,
+      keywordData.title,
+    );
 
   // FAQPage schema for AIO/GEO optimization
   const faqSchema = {
@@ -545,8 +554,46 @@ export default async function KeywordLocationPage({
     })),
   };
 
+  const services = [
+    {
+      icon: HiOutlineRocketLaunch,
+      title: (
+        <>
+          Data-Driven <br />
+          Strategies
+        </>
+      ),
+      description: "Turn your vision into a scalable, successful business.",
+      border: true,
+    },
+    {
+      icon: HiOutlineCog8Tooth,
+      title: (
+        <>
+          Measurable <br />
+          Results
+        </>
+      ),
+      description:
+        "Streamline operations, reduce costs, and maximize efficiency.",
+      border: true,
+    },
+    {
+      icon: GoGoal,
+      title: (
+        <>
+          Local Market <br />
+          Experts
+        </>
+      ),
+      description:
+        "Attract, convert, and retain your ideal customers with proven strategies.",
+    },
+  ];
+
   const heroImage = getHeroImage(`${keyword}-${location}`);
-  const videoSrc = "https://www.youtube.com/embed/Q-PWuHqt6PI?autoplay=1&mute=1&loop=1&playlist=Q-PWuHqt6PI&controls=0&rel=0&playsinline=1";
+  const videoSrc =
+    "https://www.youtube.com/embed/Q-PWuHqt6PI?controls=1&mute=0&loop=1&playlist=Q-PWuHqt6PI&rel=0&playsinline=1";
 
   return (
     <>
@@ -620,7 +667,35 @@ export default async function KeywordLocationPage({
                 {heroSubtext}
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
+              <div className="w-full lg:col-span-2">
+                <div className="flex flex-col lg:flex-row items-start lg:items-start justify-center lg:justify-start">
+                  {services.map((service, index) => {
+                    const Icon = service.icon;
+                    return (
+                      <div
+                        key={index}
+                        className={`group flex flex-row items-center sm:items-start lg:items-center justify-center lg:justify-start gap-4 ${service.border ? `border-b lg:border-b-0 lg:border-r-[3px] border-gray-500/35 lg:border-gray-500/40 ${index != 0 ? "py-4 lg:py-0 lg:px-5" : "pb-4 lg:pb-0 lg:pr-5"}` : "pt-4 lg:pt-0 lg:pl-4"}`}
+                      >
+                        <div className="shrink-0 w-10 h-10 flex items-center justify-center rounded-full text-[#F2B900] lg:shadow-none group-hover:text-[#D5A900] group-hover:shadow-[0_0_40px_rgba(213,175,52,0.14)] lg:group-hover:shadow-none transition-all duration-300">
+                          <Icon className="w-10 h-10" />
+                        </div>
+
+                        <div className="text-left">
+                          <span className="text-white font-bold text-lg leading-tight block mb-1.5 ">
+                            {service.title}
+                          </span>
+
+                          {/* <p className="text-base text-white leading-relaxed max-w-xl mx-auto sm:mx-0 block lg:hidden">
+                            {service.description}
+                          </p> */}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              {/* <div className="hiddenlg:flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
                 {heroTrustBadges.map((badge) => (
                   <div
                     key={badge}
@@ -630,18 +705,29 @@ export default async function KeywordLocationPage({
                     <span>{badge}</span>
                   </div>
                 ))}
-              </div>
+              </div> */}
             </div>
 
             <div className="w-full aspect-video sm:h-[350px] md:h-[400px] lg:h-[480px] max-h-[550px] rounded-2xl overflow-hidden shadow-2xl border border-gray-800 bg-black/60 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
               <iframe
                 className="w-full h-full rounded-2xl object-cover"
                 src={videoSrc}
-                title="Background Video"
+                title="YouTube Video"
                 frameBorder="0"
-                allow="encrypted-media; picture-in-picture"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
                 allowFullScreen
               />
+            </div>
+            <div className="flex lg:hidden flex-wrap items-center gap-4 sm:gap-6 pt-2">
+              {heroTrustBadges.map((badge) => (
+                <div
+                  key={badge}
+                  className="flex items-center gap-2 text-xs sm:text-sm md:text-base text-gray-300 font-medium"
+                >
+                  <FaCheckCircle className="text-[#D5AF34] w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
+                  <span>{badge}</span>
+                </div>
+              ))}
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-start gap-4 pt-2 lg:col-start-1 lg:row-start-2">

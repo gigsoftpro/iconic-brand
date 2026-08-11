@@ -11,8 +11,52 @@ import {
   HiChevronDown,
 } from "react-icons/hi";
 import { FaStar } from "react-icons/fa";
+import { GoGoal } from "react-icons/go";
+import {
+  HiOutlineCog8Tooth,
+  HiOutlineRocketLaunch,
+} from "react-icons/hi2";
 
 export default function HeroLight() {
+  const videoSrc = "https://www.youtube.com/embed/Q-PWuHqt6PI?controls=1&mute=0&loop=1&playlist=Q-PWuHqt6PI&rel=0&playsinline=1";
+
+  const services = [
+    {
+      icon: HiOutlineRocketLaunch,
+      title: (
+        <>
+          Startup and <br />
+          Business Consulting
+        </>
+      ),
+      description: "Turn your vision into a scalable, successful business.",
+      border: true,
+    },
+    {
+      icon: HiOutlineCog8Tooth,
+      title: (
+        <>
+          Business Process <br />
+          Optimization
+        </>
+      ),
+      description:
+        "Streamline operations, reduce costs, and maximize efficiency.",
+      border: true,
+    },
+    {
+      icon: GoGoal,
+      title: (
+        <>
+          Customer Acquisition <br />
+          Specialists
+        </>
+      ),
+      description:
+        "Attract, convert, and retain your ideal customers with proven strategies.",
+    },
+  ];
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-white via-[#FFF9E6] to-white px-4 sm:px-6 lg:px-8 py-12 sm:py-20 lg:py-28">
       {/* Animated Background Pattern */}
@@ -103,12 +147,40 @@ export default function HeroLight() {
           <div className="w-full aspect-video sm:h-[350px] md:h-[400px] lg:h-[480px] max-h-[550px] rounded-2xl overflow-hidden shadow-2xl border border-gray-200/80 bg-black/5 lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center">
             <iframe
               className="w-full h-full rounded-2xl object-cover"
-              src="https://www.youtube.com/embed/Q-PWuHqt6PI?autoplay=1&mute=1&loop=1&playlist=Q-PWuHqt6PI&controls=0&rel=0&playsinline=1"
-              title="Background Video"
+              src={videoSrc}
+              title="YouTube Video"
               frameBorder="0"
-              allow="encrypted-media; picture-in-picture"
+              allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
               allowFullScreen
             />
+          </div>
+
+          <div className="w-full lg:col-span-2">
+            <div className="flex flex-col md:flex-row items-start lg:items-start justify-center lg:justify-start">
+              {services.map((service, index) => {
+                const Icon = service.icon;
+                return (
+                  <div
+                    key={index}
+                    className={`group flex flex-row items-center sm:items-start lg:items-center justify-center lg:justify-start gap-4 ${service.border ? `border-b lg:border-b-0 lg:border-r-[3px] border-gray-500/35 lg:border-[#F2B900] ${index != 0 ? 'py-4 lg:py-0 lg:px-5' : 'pb-4 lg:pb-0 lg:pr-5'}` : "pt-4 lg:pt-0 lg:pl-4"}`}
+                  >
+                    <div className="shrink-0 h-16 w-16 lg:w-10 lg:h-10 flex items-center justify-center rounded-full text-[#F2B900] bg-[radial-gradient(circle_at_center,#FFFDF8_0%,#FAF4E7_55%,#F4EAD5_100%)] shadow-[0_0_30px_rgba(213,175,52,0.08)] lg:bg-transparent lg:shadow-none group-hover:text-[#D5A900] group-hover:shadow-[0_0_40px_rgba(213,175,52,0.14)] lg:group-hover:shadow-none transition-all duration-300">
+                      <Icon className="w-10 h-10" />
+                    </div>
+
+                    <div className="text-left">
+                      <span className="text-black font-bold text-lg leading-tight block mb-1.5 ">
+                        {service.title}
+                      </span>
+
+                      <p className="text-base text-gray-700 leading-relaxed max-w-xl mx-auto sm:mx-0 block md:hidden">
+                        {service.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Block 3: CTA Buttons */}
