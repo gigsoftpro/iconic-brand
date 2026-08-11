@@ -90,7 +90,7 @@ export default function HeroLight() {
             </div>
 
             {/* Main Headline */}
-            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-black leading-[1.1] sm:leading-[1] lg:leading-[0.9] text-black tracking-tight">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-[80px] font-black leading-[1.1] sm:leading-[1] lg:leading-[0.9] text-black tracking-tight">
               Elevate Your{" "}
               <span className="relative inline-block mt-1 sm:mt-2">
                 <span className="bg-gradient-to-r from-[#D5AF34] via-[#FFD700] to-[#C19A2E] text-transparent bg-clip-text animate-gradient bg-[length:200%_auto]">
@@ -188,7 +188,7 @@ export default function HeroLight() {
             On Mobile/Tablet: Displays below Video (Block 2).
             On Desktop (lg+): Displays below Paragraph in Left Column (col 1, row 2).
           */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 lg:col-start-1 lg:row-start-2">
+          {/* <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-4 lg:col-start-1 lg:row-start-2">
             <a
               href="#services"
               className="group relative bg-gradient-to-r from-[#D5AF34] via-[#FFD700] to-[#D5AF34] bg-[length:200%_auto] text-black px-6 sm:px-8 lg:px-10 py-3.5 sm:py-4 lg:py-5 rounded-full font-bold text-base sm:text-lg shadow-2xl shadow-[#D5AF34]/30 hover:shadow-[#D5AF34]/60 transition-all duration-500 transform hover:-translate-y-1 hover:scale-105 animate-gradient flex items-center justify-center gap-2"
@@ -233,7 +233,7 @@ export default function HeroLight() {
               </span>
               <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </Link>
-          </div>
+          </div> */}
         </div>
       </div>
 
